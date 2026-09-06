@@ -1,0 +1,23 @@
+---
+const projects = [
+  { title: 'MUF Super Web App', company: 'Mandiri Utama Finance', label: 'Connected experiences', description: 'Connecting mini-apps, REST APIs, and role-based access across head office and branch workflows.', nodes: ['Head office', 'Platform', 'Branches'], focus: 'Feature delivery · Integration · Access control' },
+  { title: 'AROA · Phase 2', company: 'Nusantara Duta Solusindo / SMBCI', label: 'Engineering together', description: 'Coordinating a four-engineer team, building interfaces and APIs, and investigating performance alongside client support.', nodes: ['Interface', 'Services', 'Data'], focus: 'Team coordination · APIs · Performance' },
+  { title: 'Report AML', company: 'Mandiri Utama Finance', label: 'From requirements to delivery', description: 'Bringing requirements, data and API design, environment preparation, and cross-team delivery into one workflow.', nodes: ['Requirements', 'Design', 'Delivery'], focus: 'System analysis · Data design · Collaboration' },
+];
+---
+<section id="work" class="section" aria-labelledby="work-title">
+  <div class="section-heading"><div><p class="eyebrow"><span class="index">01 /</span> Selected work</p><h2 id="work-title">Real work.<br />Thoughtful solutions.</h2></div><p class="muted">A few systems I’ve helped<br />shape, build, and deliver.</p></div>
+  <div class="work-grid">
+    {projects.map((project, index) => <article class="work-card">
+      <div class:list={['diagram', `diagram-${index}`]} aria-label={`Concept diagram: ${project.nodes.join(' to ')}`}>
+        <div class="diagram-top"><span>SYS / 0{index + 1}</span><span>Concept diagram</span></div>
+        <div class="nodes">{project.nodes.map((node, i) => <><span class="node">{node}</span>{i < 2 && <span class="connector" aria-hidden="true">↓</span>}</>)}</div>
+        <span class="diagram-caption">{project.label}</span>
+      </div>
+      <div class="work-copy"><p class="eyebrow">{project.company}</p><h3>{project.title}</h3><p class="muted">{project.description}</p><p class="focus">{project.focus}</p></div>
+    </article>)}
+  </div>
+</section>
+<style>
+  .work-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.25rem}.work-card{border:1px solid var(--color-border);border-radius:18px;overflow:hidden;background:var(--color-surface)}.diagram{padding:1.2rem;background:#1b2531;min-height:290px;display:flex;flex-direction:column;justify-content:space-between;color:#c2d4f5}.diagram-1{background:#26241e;color:#e3d5b6}.diagram-2{background:#222c25;color:#d5efc8}.diagram-top{display:flex;justify-content:space-between;font: .6rem var(--font-mono);text-transform:uppercase;letter-spacing:.04em}.nodes{display:grid;justify-items:center;padding:1rem}.node{padding:.55rem 1rem;border:1px solid currentColor;border-radius:7px;font:.75rem var(--font-mono);min-width:145px;text-align:center;background:#ffffff05}.connector{opacity:.5;line-height:1.4}.diagram-caption{font:.65rem var(--font-mono);opacity:.8}.work-copy{padding:1.5rem}.work-copy .eyebrow{font-size:.6rem;min-height:2rem}.work-copy h3{font-size:1.35rem}.work-copy .muted{font-size:.9rem;line-height:1.75}.focus{font:.65rem/1.8 var(--font-mono);color:var(--color-accent);margin:1.5rem 0 0}@media(max-width:950px){.work-grid{grid-template-columns:1fr}.work-card{display:grid;grid-template-columns:1fr 1.2fr}.diagram{min-height:270px}}@media(max-width:580px){.work-card{display:block}}
+</style>

@@ -1,0 +1,18 @@
+# Generated files and installed dependencies are managed by their own tools.
+node_modules/
+dist/
+.astro/
+.vercel/
+coverage/
+package-lock.json
+
+# Keep repository instructions and local agent settings untouched.
+AGENTS.md
+CLAUDE.md
+.agents/
+.codex/
+.git/
+
+# Assets are not source-formatting targets.
+public/
+src/assets/

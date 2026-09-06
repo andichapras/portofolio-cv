@@ -1,0 +1,14 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+---
+<BaseLayout title="Playground | Andicha Eka Prastya" description="Small, playable engineering experiments. Explore access control and the decisions behind good systems.">
+  <main id="main-content" class="container section" tabindex="-1">
+    <p class="eyebrow"><span class="index">LAB /</span> A little room to experiment</p><h1>Serious thinking.<br /><span>Playful learning.</span></h1><p class="intro muted">Small experiments about the decisions behind everyday systems. No sign-up. No leaderboard pressure. Just curiosity.</p>
+    <article class="experiment"><div><p class="eyebrow">01 / Ready to play</p><h2>Access Control<br />Challenge</h2><p>Who can read, edit, or approve a record? Design a policy that keeps work moving without opening the wrong doors.</p><div class="tags"><span class="pill">Logic puzzle</span><span class="pill">27 checks</span><span class="pill">Browser only</span></div><a class="button" href="/playground/access-control/">Enter the challenge ↗</a></div><div class="terminal" aria-hidden="true"><p>&gt; load policy</p><p>AGENT <span>●</span></p><p>MANAGER <span>●</span></p><p>AUDITOR <span>●</span></p><p>&gt; awaiting your rules<span class="cursor">_</span></p></div></article>
+    <div class="coming"><div><p class="eyebrow">On the drawing board</p><h3>API Performance Lab</h3><p class="muted">An upcoming experiment in latency, caching, and trade-offs.</p></div><div><p class="eyebrow">On the drawing board</p><h3>System Builder</h3><p class="muted">An upcoming experiment in connecting the right components.</p></div></div>
+    <p class="note muted">Educational simulations—not production benchmarks or security audits.</p>
+  </main>
+</BaseLayout>
+<style>
+  h1{font-size:clamp(2.7rem,6.5vw,6rem);line-height:1.05;letter-spacing:-.055em}h1 span{color:var(--color-accent)}.intro{max-width:570px;font-size:1.1rem;margin:2rem 0 3.5rem}.experiment{display:grid;grid-template-columns:1.2fr 1fr;gap:3rem;padding:clamp(1.5rem,4vw,3.5rem);border:1px solid var(--color-border);border-radius:20px;background:var(--color-surface)}.experiment h2{font-size:clamp(2rem,4vw,3.5rem)}.experiment p{max-width:500px}.tags{display:flex;gap:.5rem;flex-wrap:wrap;margin:1.5rem 0}.terminal{align-self:center;background:#d5f88c;color:#152019;border-radius:12px;padding:2rem;font:clamp(.75rem,1.5vw,1rem)/2 var(--font-mono);transform:rotate(2deg)}.terminal p{display:flex;justify-content:space-between}.terminal p:first-child,.terminal p:last-child{opacity:.65}.coming{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:3rem}.coming>div{padding-top:2rem;border-top:1px solid var(--color-border)}.note{font-size:.8rem;margin-top:3rem}@media(max-width:760px){.experiment,.coming{grid-template-columns:1fr}.terminal{transform:none}}
+</style>
