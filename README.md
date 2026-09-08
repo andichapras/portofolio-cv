@@ -37,18 +37,19 @@ A Vercel server adapter and an email SDK are deferred until a server feature/pro
 
 ## Manual workflow
 
-The owner runs commands from `D:\Project\portofolio-cv` using npm. The agent does
-not edit `package-lock.json` or `node_modules`, or execute installation/build workflows.
+The owner runs commands from `D:\Project\portofolio-cv` using Bun 1.4.2. The agent does
+not edit `bun.lock` or `node_modules`, or execute installation/build workflows.
 
-1. `npm.cmd install`: initial setup or after dependency changes, including the formatting tools below.
-2. `npm.cmd test`: run the game evaluator's behavioral tests.
-3. `npm.cmd run build`: type-check and build; already includes `astro check`.
-4. `npm.cmd run dev`: only if no dev server is running; inspect the printed URL. Ctrl+C stops a foreground server.
+1. `bun install`: initial setup or lockfile synchronization after dependency changes.
+2. `bun run --bun test`: run the game evaluator's behavioral tests.
+3. `bun run --bun build`: type-check and build; already includes `astro check`.
+4. `bun run --bun dev`: start the development server and inspect its printed URL. Ctrl+C
+   stops a foreground server.
 
 The owner reported successful installation, build, and dev startup before this UI/game
 milestone. These new changes have received static review only; tests, typecheck, build,
-and browser verification still need owner execution. `npm.cmd run check` is available independently;
-`npm.cmd run preview` inspects an existing build and is not production hosting.
+and browser verification still need owner execution. `bun run --bun check` is available
+independently; `bun run --bun preview` inspects an existing build and is not production hosting.
 
 Eight Vitest tests cover the complete solution, denied legitimate access, over-permission,
 ownership, branch boundaries, self-approval, auditor restrictions, and independent resets.
@@ -65,13 +66,13 @@ Configuration follows the [official Astro plugin guide](https://github.com/witha
 
 From `D:\Project\portofolio-cv`, run these steps manually:
 
-1. `npm.cmd install` installs the formatter dependencies and updates the npm lockfile.
-2. `npm.cmd run format` formats supported source, configuration, and documentation files.
-3. `npm.cmd run format:check` should report that all included files match the configuration.
-4. `npm.cmd test` verifies the game rules still pass.
-5. `npm.cmd run build` checks types and produces the production build.
+1. `bun install` installs dependencies and synchronizes `bun.lock`.
+2. `bun run --bun format` formats supported source, configuration, and documentation files.
+3. `bun run --bun format:check` should report that all included files match the configuration.
+4. `bun run --bun test` verifies the game rules still pass.
+5. `bun run --bun build` checks types and produces the production build.
 
-The formatter ignores generated output, installed dependencies, assets, the npm lockfile,
+The formatter ignores generated output, installed dependencies, assets, the Bun lockfile,
 and repository instruction files. Installation and repository-wide formatting are pending
 owner execution; editor cleanup is not a substitute for a successful Prettier check.
 Comments use short English explanations for lifecycle, state transitions, business rules,
@@ -110,7 +111,7 @@ all-read/no-edit/no-approve, and the self-approval safeguard enabled.
 The material below describes the original scaffold, not the current architecture.
 
 ```sh
-npm create astro@latest -- --template basics
+bun create astro@latest --template basics
 ```
 
 > 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
@@ -141,14 +142,15 @@ To learn more about the folder structure of an Astro project, refer to [our guid
 
 All commands are run from the root of the project, from a terminal:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+| Command                      | Action                                            |
+| :--------------------------- | :------------------------------------------------ |
+| `bun install`                | Installs dependencies and synchronizes `bun.lock` |
+| `bun run --bun dev`          | Starts the local development server               |
+| `bun run --bun check`        | Checks Astro components and TypeScript            |
+| `bun run --bun test`         | Runs the Vitest test suite                        |
+| `bun run --bun build`        | Builds the production site to `./dist/`           |
+| `bun run --bun preview`      | Previews an existing production build             |
+| `bun run --bun astro --help` | Displays help for the locally installed Astro CLI |
 
 ## 👀 Want to learn more?
 

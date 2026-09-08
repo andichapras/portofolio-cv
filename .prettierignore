@@ -4,6 +4,7 @@ dist/
 .astro/
 .vercel/
 coverage/
+bun.lock
 package-lock.json
 
 # Keep repository instructions and local agent settings untouched.

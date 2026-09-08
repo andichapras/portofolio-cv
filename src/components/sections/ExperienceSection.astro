@@ -1,27 +1,93 @@
 ---
 import { experience } from '@/data/experience';
 ---
+
 <section id="experience" class="section experience" aria-labelledby="experience-heading">
   <div class="section-heading">
-    <div><p class="eyebrow"><span class="index">03 /</span> The journey</p><h2 id="experience-heading">Built on experience.</h2></div>
+    <div>
+      <p class="eyebrow"><span class="index">03 /</span> The journey</p><h2 id="experience-heading">
+        Built on experience.
+      </h2>
+    </div>
     <p class="muted">Working across teams, requirements, and the systems that connect them.</p>
   </div>
-  {experience.map((job, index) => (
-    <article class="role">
-      <p class="period"><span class="role-dot" aria-hidden="true"></span>{job.startYear} — {job.endYear ?? 'Present'}{job.endYear === null && <span class="current">Current</span>}</p>
-      <div><p class="eyebrow">0{index + 1} / {job.role}</p><h3>{job.company}</h3></div>
-      <ul>{job.highlights.map((highlight) => <li>{highlight}</li>)}</ul>
-    </article>
-  ))}
+  {
+    experience.map((job, index) => (
+      <article class="role">
+        <p class="period">
+          <span class="role-dot" aria-hidden="true" />
+          {job.startYear} — {job.endYear ?? 'Present'}
+          {job.endYear === null && <span class="current">Current</span>}
+        </p>
+        <div>
+          <>
+            <p class="eyebrow">
+              0{index + 1} / {job.role}
+            </p>
+            <h3>{job.company}</h3>
+          </>
+        </div>
+        <ul>
+          {job.highlights.map((highlight) => (
+            <li>{highlight}</li>
+          ))}
+        </ul>
+      </article>
+    ))
+  }
 </section>
 <style>
-  .experience { border-top: 1px solid var(--color-border); }
-  .role { display: grid; grid-template-columns: .85fr 1.2fr 1.5fr; gap: 2rem; border-top: 1px solid var(--color-border); padding-block: 2.5rem; }
-  .period { font: .77rem/1.8 var(--font-mono); color: var(--color-muted); }
-  .role-dot { width: 6px; height: 6px; display: inline-block; margin-right: .75rem; background: var(--color-lime); border-radius: 50%; }
-  .current { display: block; margin: .7rem 0 0 1.1rem; color: var(--color-lime); font-size: .63rem; text-transform: uppercase; letter-spacing: .08em; }
-  h3 { font-size: 1.55rem; margin-bottom: 0; }
-  ul { margin: 0; padding-left: 1rem; font-size: .87rem; color: var(--color-muted); }
-  li + li { margin-top: .75rem; }
-  @media (max-width: 800px) { .role { grid-template-columns: 1fr; gap: .8rem; } .current { display: inline-block; margin: 0 0 0 1rem; } }
+  .experience {
+    border-top: 1px solid var(--color-border);
+  }
+  .role {
+    display: grid;
+    grid-template-columns: 0.85fr 1.2fr 1.5fr;
+    gap: 2rem;
+    border-top: 1px solid var(--color-border);
+    padding-block: 2.5rem;
+  }
+  .period {
+    font: 0.77rem/1.8 var(--font-mono);
+    color: var(--color-muted);
+  }
+  .role-dot {
+    width: 6px;
+    height: 6px;
+    display: inline-block;
+    margin-right: 0.75rem;
+    background: var(--color-lime);
+    border-radius: 50%;
+  }
+  .current {
+    display: block;
+    margin: 0.7rem 0 0 1.1rem;
+    color: var(--color-lime);
+    font-size: 0.63rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  h3 {
+    font-size: 1.55rem;
+    margin-bottom: 0;
+  }
+  ul {
+    margin: 0;
+    padding-left: 1rem;
+    font-size: 0.87rem;
+    color: var(--color-muted);
+  }
+  li + li {
+    margin-top: 0.75rem;
+  }
+  @media (max-width: 800px) {
+    .role {
+      grid-template-columns: 1fr;
+      gap: 0.8rem;
+    }
+    .current {
+      display: inline-block;
+      margin: 0 0 0 1rem;
+    }
+  }
 </style>

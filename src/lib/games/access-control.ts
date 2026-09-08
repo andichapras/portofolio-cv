@@ -40,9 +40,15 @@ export function canAccess(policy: Policy, request: AccessRequest): boolean {
 // Keep the mission rules independent from the player's configurable policy.
 export function expectedAccess({ actor, record, action }: AccessRequest): boolean {
   switch (actor.role) {
-    case 'agent': return action !== 'approve' && actor.id === record.ownerId;
-    case 'manager': return actor.branch === record.branch && (action === 'read' || (action === 'approve' && actor.id !== record.ownerId));
-    case 'auditor': return action === 'read';
+    case 'agent':
+      return action !== 'approve' && actor.id === record.ownerId;
+    case 'manager':
+      return (
+        actor.branch === record.branch &&
+        (action === 'read' || (action === 'approve' && actor.id !== record.ownerId))
+      );
+    case 'auditor':
+      return action === 'read';
   }
 }
 const relationships = [
@@ -51,17 +57,35 @@ const relationships = [
   { label: 'record from another branch', ownerId: 'other', branch: 'Bandung' },
 ] as const;
 // Cover every role/action/ownership combination: 3 × 3 × 3 checks.
-export const scenarios = roles.flatMap((role) => actions.flatMap((action) => relationships.map((record, index) => ({
-  id: `${role}-${action}-${index}`,
-  label: `${role} / ${action} / ${record.label}`,
-  request: { actor: { id: 'player', role, branch: 'Jakarta' }, record: { ownerId: record.ownerId, branch: record.branch }, action } satisfies AccessRequest,
-}))));
+export const scenarios = roles.flatMap((role) =>
+  actions.flatMap((action) =>
+    relationships.map((record, index) => ({
+      id: `${role}-${action}-${index}`,
+      label: `${role} / ${action} / ${record.label}`,
+      request: {
+        actor: { id: 'player', role, branch: 'Jakarta' },
+        record: { ownerId: record.ownerId, branch: record.branch },
+        action,
+      } satisfies AccessRequest,
+    })),
+  ),
+);
 // Compare expected and actual access to identify both blocked work and unsafe grants.
 export function evaluatePolicy(policy: Policy) {
   const results = scenarios.map((scenario) => {
     const actual = canAccess(policy, scenario.request);
     const expected = expectedAccess(scenario.request);
-    return { id: scenario.id, label: scenario.label, actual, expected, passed: actual === expected };
+    return {
+      id: scenario.id,
+      label: scenario.label,
+      actual,
+      expected,
+      passed: actual === expected,
+    };
   });
-  return { results, passed: results.filter((result) => result.passed).length, total: results.length };
+  return {
+    results,
+    passed: results.filter((result) => result.passed).length,
+    total: results.length,
+  };
 }

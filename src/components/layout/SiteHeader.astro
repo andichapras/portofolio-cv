@@ -1,31 +1,101 @@
 ---
 const onPlayground = Astro.url.pathname.startsWith('/playground');
 ---
+
 <header class="site-header container">
-  <a class="brand" href="/" aria-label="andichapras — Home"><span class="brand-mark" aria-hidden="true">a<span>.</span></span><span>andichapras</span></a>
+  <a class="brand" href="/" aria-label="andichapras — Home"
+    ><span class="brand-mark" aria-hidden="true">a<span>.</span></span><span>andichapras</span></a
+  >
   <nav aria-label="Main navigation">
     <a href="/#work">Work</a>
     <a href="/#about">About</a>
-    <a href="/playground/" aria-current={onPlayground ? 'page' : undefined}>Playground <span class="nav-dot" aria-hidden="true"></span></a>
+    <a href="/playground/" aria-current={onPlayground ? 'page' : undefined}
+      >Playground <span class="nav-dot" aria-hidden="true"></span></a
+    >
   </nav>
   <a class="contact-link" href="/#contact">Let's talk <span aria-hidden="true">↗</span></a>
 </header>
 <style>
-  .site-header { min-height: 100px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; border-bottom: 1px solid var(--color-border); }
-  .brand { display: flex; gap: .8rem; align-items: center; text-decoration: none; font-size: .9rem; font-weight: 650; }
-  .brand-mark { font-size: 2.3rem; line-height: 1; letter-spacing: -.15em; margin-right: .2rem; }
-  .brand-mark span { color: var(--color-lime); }
-  nav { display: flex; gap: 2rem; }
-  nav a, .contact-link { font-size: .82rem; text-decoration: none; padding-block: .7rem; }
-  nav a { color: var(--color-muted); }
-  nav a:hover, nav a[aria-current] { color: var(--color-text); }
-  .nav-dot { display: inline-block; height: 5px; width: 5px; background: var(--color-lime); border-radius: 50%; vertical-align: top; margin-top: .25rem; }
-  .contact-link { border-bottom: 1px solid #717681; }
+  .site-header {
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .brand {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 650;
+  }
+  .brand-mark {
+    font-size: 2.3rem;
+    line-height: 1;
+    letter-spacing: -0.15em;
+    margin-right: 0.2rem;
+  }
+  .brand-mark span {
+    color: var(--color-lime);
+  }
+  nav {
+    display: flex;
+    gap: 2rem;
+  }
+  nav a,
+  .contact-link {
+    font-size: 0.82rem;
+    text-decoration: none;
+    padding-block: 0.7rem;
+  }
+  nav a {
+    color: var(--color-muted);
+  }
+  nav a:hover,
+  nav a[aria-current] {
+    color: var(--color-text);
+  }
+  .nav-dot {
+    display: inline-block;
+    height: 5px;
+    width: 5px;
+    background: var(--color-lime);
+    border-radius: 50%;
+    vertical-align: top;
+    margin-top: 0.25rem;
+  }
+  .contact-link {
+    border-bottom: 1px solid #717681;
+  }
   @media (max-width: 760px) {
-    .site-header { min-height: 100px; flex-wrap: wrap; padding-block: 1rem; }
-    .brand { gap: .6rem; }
-    nav { order: 3; width: 100%; gap: .4rem; justify-content: space-between; }
-    nav a { display: inline-flex; justify-content: center; align-items: center; gap: .3rem; min-height: 44px; padding: .65rem .8rem; border-radius: 8px; }
-    nav a[aria-current] { background: var(--color-surface); }
+    .site-header {
+      min-height: 100px;
+      flex-wrap: wrap;
+      padding-block: 1rem;
+    }
+    .brand {
+      gap: 0.6rem;
+    }
+    nav {
+      order: 3;
+      width: 100%;
+      gap: 0.4rem;
+      justify-content: space-between;
+    }
+    nav a {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.3rem;
+      min-height: 44px;
+      padding: 0.65rem 0.8rem;
+      border-radius: 8px;
+    }
+    nav a[aria-current] {
+      background: var(--color-surface);
+    }
   }
 </style>

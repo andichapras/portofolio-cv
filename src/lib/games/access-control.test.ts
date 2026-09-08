@@ -1,12 +1,31 @@
 import { describe, expect, it } from 'vitest';
-import { canAccess, createInitialPolicy, evaluatePolicy, expectedAccess, type AccessRequest, type Policy } from './access-control';
+import {
+  canAccess,
+  createInitialPolicy,
+  evaluatePolicy,
+  expectedAccess,
+  type AccessRequest,
+  type Policy,
+} from './access-control';
 
-const solution: Policy = { permissions: {
-  agent: { read: 'own', edit: 'own', approve: 'none' },
-  manager: { read: 'branch', edit: 'none', approve: 'branch' },
-  auditor: { read: 'all', edit: 'none', approve: 'none' },
-}, preventSelfApproval: true };
-const request = (role: AccessRequest['actor']['role'], action: AccessRequest['action'], ownerId = 'colleague', branch = 'Jakarta'): AccessRequest => ({ actor: { id: 'player', role, branch: 'Jakarta' }, record: { ownerId, branch }, action });
+const solution: Policy = {
+  permissions: {
+    agent: { read: 'own', edit: 'own', approve: 'none' },
+    manager: { read: 'branch', edit: 'none', approve: 'branch' },
+    auditor: { read: 'all', edit: 'none', approve: 'none' },
+  },
+  preventSelfApproval: true,
+};
+const request = (
+  role: AccessRequest['actor']['role'],
+  action: AccessRequest['action'],
+  ownerId = 'colleague',
+  branch = 'Jakarta',
+): AccessRequest => ({
+  actor: { id: 'player', role, branch: 'Jakarta' },
+  record: { ownerId, branch },
+  action,
+});
 
 describe('Access Control Challenge', () => {
   it('accepts the least-privilege solution across all 27 scenarios', () => {
@@ -22,7 +41,9 @@ describe('Access Control Challenge', () => {
   it('detects over-permission, not just missing permissions', () => {
     const policy = createInitialPolicy();
     policy.permissions.agent.read = 'all';
-    expect(evaluatePolicy(policy).results.some((result) => !result.expected && result.actual)).toBe(true);
+    expect(evaluatePolicy(policy).results.some((result) => !result.expected && result.actual)).toBe(
+      true,
+    );
   });
   it('allows agents to read and edit only their own records, never approve', () => {
     expect(canAccess(solution, request('agent', 'read', 'player'))).toBe(true);
@@ -48,10 +69,12 @@ describe('Access Control Challenge', () => {
     expect(canAccess(solution, request('auditor', 'approve'))).toBe(false);
   });
   it('creates independent reset policies and does not mutate them when evaluating', () => {
-    const first = createInitialPolicy(); const second = createInitialPolicy();
+    const first = createInitialPolicy();
+    const second = createInitialPolicy();
     first.permissions.agent.read = 'all';
     expect(second.permissions.agent.read).toBe('none');
-    const before = JSON.stringify(first); evaluatePolicy(first);
+    const before = JSON.stringify(first);
+    evaluatePolicy(first);
     expect(JSON.stringify(first)).toBe(before);
   });
 });

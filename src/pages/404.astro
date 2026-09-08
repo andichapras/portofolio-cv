@@ -1,5 +1,30 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 ---
-<BaseLayout title="Page not found | Andicha Eka Prastya" description="This page is missing. Return to Andicha’s portfolio or explore the playground."><main id="main-content" class="container section" tabindex="-1"><p class="eyebrow">404 / A missing connection</p><h1>This route doesn’t<br />lead anywhere. Yet.</h1><p class="muted">Let’s get you back to something useful.</p><a class="button" href="/">Back to the portfolio ↗</a></main></BaseLayout>
-<style>main{min-height:65vh}h1{font-size:clamp(2.5rem,6vw,5rem);line-height:1.1;letter-spacing:-.04em}.button{margin-top:1.5rem}</style>
+
+<BaseLayout
+  title="Page not found | Andicha Eka Prastya"
+  description="This page is missing. Return to Andicha’s portfolio or explore the playground."
+>
+  <main id="main-content" class="container section" tabindex="-1">
+    <p class="eyebrow">404 / A missing connection</p>
+    <h1>
+      This route doesn’t<br />lead anywhere. Yet.
+    </h1>
+    <p class="muted">Let’s get you back to something useful.</p>
+    <a class="button" href="/">Back to the portfolio ↗</a>
+  </main>
+</BaseLayout>
+<style>
+  main {
+    min-height: 65vh;
+  }
+  h1 {
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+  }
+  .button {
+    margin-top: 1.5rem;
+  }
+</style>

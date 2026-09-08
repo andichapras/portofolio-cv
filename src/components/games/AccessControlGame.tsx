@@ -87,9 +87,7 @@ export default function AccessControlGame() {
                 <select
                   id={`${role}-${action}`}
                   value={policy.permissions[role][action]}
-                  onChange={(event) =>
-                    updatePermission(role, action, event.target.value as Scope)
-                  }
+                  onChange={(event) => updatePermission(role, action, event.target.value as Scope)}
                 >
                   {scopes.map((scope) => (
                     <option key={scope} value={scope}>
@@ -118,9 +116,7 @@ export default function AccessControlGame() {
         />
         <span>
           <strong>Prevent self-approval</strong>
-          <small>
-            Nobody can approve a record they own, even when their scope includes it.
-          </small>
+          <small>Nobody can approve a record they own, even when their scope includes it.</small>
         </span>
       </label>
       <div className="access-actions">
@@ -131,7 +127,9 @@ export default function AccessControlGame() {
           Reset policy
         </button>
       </div>
-      <div className={`access-result ${report && report.passed === report.total ? 'is-success' : ''}`}>
+      <div
+        className={`access-result ${report && report.passed === report.total ? 'is-success' : ''}`}
+      >
         <p role="status" aria-live="polite" aria-atomic="true">
           {ready ? notice : 'Waiting for interactive controls. JavaScript is required to play.'}
         </p>

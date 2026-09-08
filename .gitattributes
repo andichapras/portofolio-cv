@@ -1,0 +1,15 @@
+# Normalize repository text files to LF across operating systems.
+* text=auto eol=lf
+
+# Keep binary assets untouched by line-ending normalization.
+*.avif binary
+*.gif binary
+*.glb binary
+*.ico binary
+*.jpg binary
+*.jpeg binary
+*.pdf binary
+*.png binary
+*.webp binary
+*.woff binary
+*.woff2 binary
