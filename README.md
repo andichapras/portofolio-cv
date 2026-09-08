@@ -58,9 +58,9 @@ It is an educational simulation, not production authorization or a security audi
 ## Formatting and comments
 
 Prettier uses two spaces, single quotes, semicolons, a 100-character print width,
-and LF line endings. The Astro parser is configured with JSX whitespace behavior
-to match Astro 7. The official Astro plugin is pinned to `1.0.0-beta.1` (a prerelease);
-Prettier is pinned to `3.9.6`. Review formatted page spacing before accepting changes.
+and LF line endings. The Astro parser is selected explicitly for `.astro` files.
+The official Astro plugin is pinned to the stable `0.14.1` release, while Prettier
+is pinned to `3.9.6`. Review formatted page spacing before accepting changes.
 Configuration follows the [official Astro plugin guide](https://github.com/withastro/prettier-plugin-astro).
 
 From `D:\Project\portofolio-cv`, run these steps manually:

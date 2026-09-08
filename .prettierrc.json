@@ -11,8 +11,7 @@
     {
       "files": "*.astro",
       "options": {
-        "parser": "astro",
-        "astroCompressHTML": "jsx"
+        "parser": "astro"
       }
     }
   ]

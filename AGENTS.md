@@ -6,7 +6,7 @@
   or clearly listed batch, explain in Indonesian the exact commands, working directory,
   and purpose. An explanation is required; separate approval is not needed for permitted reads.
 - Allowed examples: pwd/Get-Location, ls/Get-ChildItem, cat/Get-Content, rg searches,
-  node --version, npm --version, git --version, and safe local CLI --version/--help.
+  bun --version, git --version, and safe local CLI --version/--help.
   Read-only Git inspection may use git --no-optional-locks status/diff/log/show/ls-files.
   --no-optional-locks avoids optional Git index refresh writes during inspection.
 - Judge commands by their actual effects, not their names. Read-only means no intentional
@@ -14,10 +14,12 @@
   If a supposedly informational command may install, refresh caches, or run hooks, do not
   execute it; inspect files instead or give the command to the user.
 - Use already-installed local binaries for version/help checks only after confirming the
-  flags are supported and informational. Do not use npx, npm exec, or another package
+  flags are supported and informational. Do not use bunx, npx, npm exec, or another package
   resolver for agent-run checks when it could download packages or modify caches/logs.
-  Reading package.json/package-lock.json is preferred when it answers the question.
-- The user manually executes installation/update/removal, npm scripts, builds, tests, lint,
+  Reading package.json/bun.lock is preferred when it answers the question. Legacy lockfiles
+  may be read to plan migration. Bun's --bun flag chooses the runtime; it does not prevent
+  downloads or writes. Do not treat bunx --bun as a read-only command.
+- The user manually executes installation/update/removal, Bun scripts, builds, tests, lint,
   formatting, dev/preview servers, migrations, dependency generation, and deployments.
   Even checks can generate caches, reports, snapshots, or build files: leave them manual.
 - Do not write, replace, delete, rename, or redirect output into files through CLI. Do not
@@ -63,7 +65,8 @@ These are a roadmap, not authorization to implement every feature in each task.
 ## Working agreement
 
 - Communicate in Indonesian. Explain important Astro concepts and engineering trade-offs.
-- First inspect applicable instructions, package.json, package-lock.json, Astro configuration,
+- First inspect applicable instructions, package.json, bun.lock (and legacy lockfiles during
+  migration), bunfig.toml if present, Astro configuration,
   and relevant code through file APIs or explained read-only CLI. Inspect changes through
   the IDE or permitted read-only Git commands. Do not change the index or working tree via CLI.
 - If asked to explain, review, or propose, keep application files unchanged unless
@@ -85,6 +88,9 @@ These are a roadmap, not authorization to implement every feature in each task.
 ## Stack and scope
 
 - Astro and TypeScript are the selected foundation. Keep TypeScript strict.
+- Bun is the selected package manager, script runner, and intended JavaScript runtime for
+  local development, builds, and compatible server workloads. This replaces the previous
+  npm decision, including older project briefs. Migration completion must be verified.
 - Use .astro components for page shells, layouts, navigation, and content presentation.
 - Use React through @astrojs/react only for stateful interactions that benefit from it.
 - Use GSAP/ScrollTrigger for coordinated motion and Three.js for the homepage scene.
@@ -98,48 +104,100 @@ These are a roadmap, not authorization to implement every feature in each task.
   without a requirement. Keep dependencies limited to the current milestone.
 - Vercel is the intended initial host. A static site does not require a server adapter.
   Add the adapter only for features that require it.
+- Use Bun explicitly in hosted install/build workflows. For dynamic endpoints/SSR, verify
+  the exact Astro adapter and hosting combination supports Bun; package-manager detection
+  alone does not select the deployed function runtime. Report incompatible combinations
+  and propose a Bun-compatible path rather than silently falling back to Node.js.
 
-## Package management and versions
+## Bun package management, runtime, and migration
 
-- This project uses npm and package-lock.json. Do not suggest pnpm, Yarn, or Bun as the
-  workflow, create their lockfiles, or silently migrate package managers.
-- If repository metadata conflicts with npm, report it and propose a correction. Do not
-  delete lockfiles blindly. Let the user run npm to generate/update package-lock.json;
-  do not hand-edit resolved dependency versions or integrity hashes.
-- Read package.json and package-lock.json through file APIs or explained read-only CLI to distinguish declared ranges
-  from locked versions. Neither proves local dependencies are currently installed.
-- When actual installed versions/help are needed, explain and run a safe, already-installed
-  local binary's informational command. If that cannot be done without possible writes or
-  downloads, provide a manual command. Never install Astro globally.
-- Do not upgrade the project merely because online docs describe a newer release.
-- Recommend existing repository scripts; do not assume check/lint/test scripts exist.
-- Requested dependency/script changes to package.json are allowed as file edits. Report
-  the exact npm install command needed and mark installation/lockfile synchronization pending.
-- Do not recommend forced dependency upgrades or npm audit fix --force as routine fixes.
-- Write manual commands compatible with the user's shell, normally Windows PowerShell.
-  Give separate commands rather than shell-specific command chains.
+- Use Bun exclusively for the project workflow. Do not recommend npm/npx, pnpm, or Yarn
+  as fallback execution paths. npm-compatible packages and node: imports do not by themselves
+  imply execution under Node.js; do not rewrite compatible APIs merely because of their names.
+- Use text bun.lock as the authoritative lockfile after migration. package.json remains the
+  package manifest. Pin packageManager to bun@<exact-version> after learning the actual chosen
+  version; do not commit placeholders or invent a version. Align local, CI, and hosted Bun versions.
+- Read declared versions, locks, scripts, lifecycle hooks, and existing runtime settings before
+  proposing changes. Do not equate a lockfile with installed dependencies or proven compatibility.
+- The user runs bun install to install/migrate dependencies. Keep package-lock.json available
+  for the initial import when no Bun lockfile exists; do not delete it before migration.
+  Bun can import legacy locks, but review the resulting resolutions and overrides for changes.
+- Once the user confirms successful installation and relevant checks, propose manual removal
+  of obsolete package-lock.json/pnpm-lock.yaml/yarn.lock as applicable. Do not leave multiple
+  active lockfiles at migration completion, and do not remove unrelated lockfiles in other projects.
+- If bun.lockb exists, plan its documented conversion to bun.lock instead of creating competing
+  locks. Never hand-edit resolved versions, integrity hashes, or fabricate generated lock contents.
+- Preserve dependency ranges during migration unless a specific compatibility fix is needed.
+  Do not combine migration with broad upgrades, a framework rewrite, or automatic cache deletion.
+- Audit .npmrc for necessary registry/auth settings before changing it: Bun may use npm-compatible
+  configuration. Do not remove private registry configuration or print credentials.
+- For Bun runtime execution, prefer explicit bun run --bun <script>. bun run alone may honor
+  Node shebangs in tools. Inspect scripts for explicit node/npm/npx calls and nested commands;
+  --bun is not proof every subprocess or hosted function uses Bun.
+- Adapt script internals to Bun/local binaries where compatible. Keep Astro/Vite's build pipeline;
+  replacing the runtime does not mean replacing astro build with bun build.
+- Keep existing test frameworks unless migration is explicitly justified. bun run --bun test
+  executes the repository's test script; bun test is Bun's own test runner and is not an automatic
+  replacement for Vitest, Playwright, or their configurations.
+- Dependency changes may use editor/patch APIs for package.json. The user executes bun add,
+  bun add -d, bun remove, bun install, and bun update as needed. Report pending lockfile sync.
+- Bun dependency lifecycle scripts follow its trust policy. If a required build script is blocked,
+  identify the dependency and reason before proposing a narrow trustedDependencies change and
+  the documented manual rerun. Never trust all dependencies to suppress an installation issue.
+- Use bun install --frozen-lockfile in CI after a valid bun.lock is generated. A frozen install
+  still installs/writes files and is never a permitted read-only agent command.
+- For informational checks, explain bun --version or inspect a local package's bin entry before
+  invoking its known-safe --version/--help under Bun. Do not run package scripts as read-only probes.
+- If a tool requires Node at runtime, state the specific blocker and options. Do not silently
+  restore npm/Node execution or uninstall machine-wide Node/NVM tooling used by other projects.
+- Existing Node engine constraints in third-party packages may remain. Review project-level
+  engine/runtime declarations deliberately; do not alter dependency manifests inside node_modules.
+- Use Windows PowerShell-compatible manual commands. Give commands separately and explain
+  purpose, directory, expected results, and side effects. All mutating execution stays manual.
+
+## Migration acceptance criteria
+
+Mark migration pending until the relevant evidence exists:
+- AGENTS.md and CLAUDE.md have identical Bun instructions in the actual repository.
+- packageManager, scripts, README instructions, CI, and hosting install/build settings align with Bun.
+- bun.lock was generated by Bun, reviewed, and legacy project lockfiles were retired after validation.
+- The user ran installation, typecheck/build, relevant tests, and reviewed required lifecycle scripts.
+- Dev, build, and configured runtime processes use Bun without an undisclosed Node fallback.
+- For a static deployment, Bun builds assets and browsers run the client JavaScript; there is no
+  Bun server runtime to assign to static HTML. For SSR/API, separately verify deployed runtime support.
+- User-supplied results support completion. Editing these instructions alone does not migrate code,
+  install dependencies, change CI settings, or prove runtime compatibility.
 
 ## Development server
 
 The USER starts and stops all servers. Never launch a server or background process.
 The agent may inspect existing status/logs only through known read-only commands or files,
 after explaining the command. If status/log behavior is uncertain, let the user execute it.
-Recommend npm run dev for an ordinary manual terminal session when the dev script exists.
+Recommend bun run --bun dev for an ordinary manual terminal session when the dev script exists.
 Background mode is optional for the user, not a requirement for agent execution.
 
-The following npm-wrapper commands are manual examples to DISPLAY to the user, from the
-project root with installed dependencies. Safe direct local-binary reads are governed by
-the CLI policy above. Background commands require a supporting version (introduced in Astro 7).
+The following commands are manual examples to DISPLAY to the user, from the project root.
+Confirm each package.json script first. The astro script should directly invoke the locally
+installed Astro CLI (for example, "astro": "astro") without install/generation hooks; propose
+that script as an editor change if missing. bun run uses scripts/local binaries without the
+on-demand package fetching behavior of bunx. Agent-run reads remain restricted as above.
+Background commands require a supporting Astro version (introduced in Astro 7); also verify
+behavior with the installed Bun and operating system rather than assuming compatibility.
 
-| User action                          | Manual npm command                      |
-| ------------------------------------ | --------------------------------------- |
-| Check installed version              | npm exec --no -- astro --version        |
-| Check CLI help                       | npm exec --no -- astro dev --help       |
-| Start normally, if dev script exists | npm run dev                             |
-| Start in background, if supported    | npm exec --no -- astro dev --background |
-| Background status, if supported      | npm exec --no -- astro dev status       |
-| Background logs, if supported        | npm exec --no -- astro dev logs         |
-| Stop background server, if supported | npm exec --no -- astro dev stop         |
+| User action | Manual Bun command |
+| --- | --- |
+| Inspect Bun version (agent may also run after explanation) | bun --version |
+| Install/migrate dependencies | bun install |
+| Inspect Astro version through verified astro script | bun run --bun astro --version |
+| Inspect Astro help through verified astro script | bun run --bun astro dev --help |
+| Start normally, if dev script exists | bun run --bun dev |
+| Typecheck, if check script exists | bun run --bun check |
+| Production build, if build script exists | bun run --bun build |
+| Preview existing build, if preview script exists | bun run --bun preview |
+| Start in background, if supported | bun run --bun astro dev --background |
+| Background status, if supported | bun run --bun astro dev status |
+| Background logs, if supported | bun run --bun astro dev logs |
+| Stop background server, if supported | bun run --bun astro dev stop |
 
 - Do not suggest unsupported flags. Explain the normal dev script as the fallback.
 - Ask for the URL/port reported by the user's server when a preview is needed; do not assume
@@ -253,12 +311,12 @@ Follow existing conventions; create directories only when needed.
   retry/reset, and understandable feedback. Do not equate animation with correct logic.
 - Write meaningful test cases for legitimate access/over-permission in Access Control,
   valid/invalid paths in System Builder, and cost/performance/freshness in API Performance
-  Lab. Provide npm commands for the user to execute tests; never execute them yourself.
+  Lab. Provide Bun commands for the user to execute tests; never execute them yourself.
 
 ## Verification and completion
 
 - Perform static review through editor/file APIs or explained read-only CLI. For applicable typecheck, build, tests,
-  lint, or formatting, provide manual npm commands only. Do not execute these workflows.
+  lint, or formatting, provide manual Bun commands only. Do not execute these workflows.
 - Avoid duplicate manual checks when build already includes astro check. Confirm scripts
   in package.json before suggesting commands; if absent, propose the minimal setup.
 - Write behavioral tests for game rules, validation, or regressions when useful, but leave
@@ -300,6 +358,11 @@ do not run a documentation command that downloads files or starts an application
 - [Images](https://docs.astro.build/en/guides/images/)
 - [Internationalization, only if requested](https://docs.astro.build/en/guides/internationalization/)
 - [Vercel deployment](https://docs.astro.build/en/guides/deploy/vercel/)
+- [Astro with Bun](https://docs.astro.build/en/recipes/bun/)
+- [Bun runtime and script execution](https://bun.com/docs/runtime)
+- [Bun lockfiles and migration](https://bun.com/docs/pm/lockfile)
+- [Bun installation and lifecycle policy](https://bun.com/docs/pm/cli/install)
+- [Bun runtime on Vercel](https://vercel.com/docs/functions/runtimes/bun)
 
 ## Maintaining these instructions
 
