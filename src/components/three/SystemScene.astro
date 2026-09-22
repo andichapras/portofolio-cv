@@ -86,7 +86,11 @@
     overflow: hidden;
     border: 1px solid var(--color-border);
     border-radius: 20px;
-    background: radial-gradient(ellipse at 50% 40%, #24303e 0%, #14191f 65%);
+    background: radial-gradient(
+      ellipse at 50% 40%,
+      var(--color-scene-start) 0%,
+      var(--color-scene-end) 65%
+    );
   }
   .scene-top {
     display: flex;
@@ -121,7 +125,7 @@
   }
   .scene-viewport:focus-visible {
     outline-offset: -3px;
-    background: #ffffff03;
+    background: var(--color-scene-focus);
   }
   [data-canvas] {
     position: absolute;
@@ -144,18 +148,18 @@
   }
   .scene-fallback div {
     padding: 1.2rem;
-    border: 1px solid #b6cdfd80;
-    background: #26364a;
+    border: 1px solid var(--color-scene-border);
+    background: var(--color-scene-panel);
     border-radius: 10px;
-    box-shadow: 10px 10px 0 #080b0f70;
+    box-shadow: 10px 10px 0 var(--color-scene-shadow);
     font: 0.8rem var(--font-mono);
   }
   .scene-fallback div:nth-child(2) {
-    background: #425034;
-    color: #e1f9c3;
+    background: var(--color-scene-panel-alt);
+    color: var(--color-scene-panel-text);
   }
   .scene-fallback div:nth-child(3) {
-    background: #30343e;
+    background: var(--color-scene-panel-last);
   }
   :global(system-scene[data-ready]) .scene-fallback {
     display: none;
@@ -201,8 +205,8 @@
       border-color 0.2s;
   }
   .scene-controls button[aria-pressed='true'] {
-    background: var(--color-lime);
-    color: #14171e;
+    background: var(--color-action-background);
+    color: var(--color-action-text);
   }
   .scene-status {
     font: 0.6rem/1.7 var(--font-mono);
@@ -213,10 +217,10 @@
   @media (hover: hover) {
     .scene-controls button:not(:disabled):hover {
       border-color: var(--color-accent);
-      background: #b6cdfd18;
+      background: var(--color-scene-hover);
     }
     .scene-controls button[aria-pressed='true']:hover {
-      background: #e2ffb0;
+      background: var(--color-action-hover);
     }
   }
   @media (pointer: coarse) {

@@ -1,157 +1,149 @@
 # Andicha Eka Prastya — Portfolio
 
-English-language portfolio for a Software Engineer and System Analyst based in Jakarta.
-The current milestone provides a redesigned homepage, confirmed employment history,
-an interactive Three.js illustration, and the playable Access Control Challenge.
-Full project case studies remain unpublished drafts.
+Personal portfolio of **Andicha Eka Prastya**, a Software Engineer and System Analyst based in
+Jakarta, Indonesia. This website presents my professional journey, selected work, and approach to
+turning business requirements into thoughtful digital systems.
 
-## Current architecture
+The portfolio is written in English to support conversations with recruiters, engineering teams,
+and potential collaborators in Indonesia and international environments.
 
-- `src/pages/`: routes and page composition.
-- `src/layouts/`: shared document shell and metadata.
-- `src/components/layout/`: shared navigation UI.
-- `src/components/sections/`: reusable content sections.
-- `src/components/three/`: lazy-loaded scene, controls, static fallback, and cleanup.
-- `src/components/games/`: React game UI and feature-local styles/state.
-- `src/lib/games/`: pure authorization evaluator and Vitest behavioral tests.
-- `src/pages/playground/`: experiment directory and dedicated game route.
-- `src/config/site.ts`: public identity and site defaults.
-- `src/data/experience.ts`: typed employment data, with year precision only.
-- `src/content/projects/`: editorial Markdown/MDX drafts.
-- `src/content.config.ts`: project collection schema.
-- `src/lib/projects.ts`: published-only query for future listings and detail routes.
-- `src/styles/global.css`: custom CSS tokens, layout, and accessibility defaults.
+## About me
 
-React and MDX integrations are enabled. The homepage dynamically imports Three.js
-and GSAP when its scene enters the viewport. ScrollTrigger adds a small scroll-linked
-rotation until the visitor takes control. Mouse drag rotates/tilts the illustration;
-horizontal touch drag rotates while vertical swipes and pinch zoom remain native.
-The focused scene supports arrow keys and Home; buttons separate layers and reset.
-Pointer cancellation, lost capture, hidden tabs, and cleanup release drag state.
-Rendering is on demand, capped
-at 1.5 device pixel ratio, with offscreen/hidden guards and explicit resource cleanup.
-Reduced motion disables scroll-linked motion and makes control changes immediate.
-React hydrates only on the game route. There is no Tailwind: custom CSS is retained.
-Sitemap is declared but will be enabled with `site` when the domain is confirmed.
-A Vercel server adapter and an email SDK are deferred until a server feature/provider is chosen.
+I work across software engineering and system analysis, connecting business needs with practical
+technical solutions. My experience includes frontend and backend development, REST API design,
+system integration, access control, performance investigation, and delivery coordination.
 
-## Manual workflow
+I enjoy understanding why a system is needed before deciding how it should be built. That means
+listening to stakeholders, translating business processes into technical requirements, making
+trade-offs visible, and helping a team move from an initial idea to a working implementation.
 
-The owner runs commands from `D:\Project\portofolio-cv` using Bun 1.4.2. The agent does
-not edit `bun.lock` or `node_modules`, or execute installation/build workflows.
+My professional journey began at Nusantara Duta Solusindo and continues at Mandiri Utama Finance.
+Along the way, my responsibilities have expanded beyond implementation into technical support,
+team coordination, performance analysis, environment preparation, and junior engineer mentoring.
 
-1. `bun install`: initial setup or lockfile synchronization after dependency changes.
-2. `bun run --bun test`: run the game evaluator's behavioral tests.
-3. `bun run --bun build`: type-check and build; already includes `astro check`.
-4. `bun run --bun dev`: start the development server and inspect its printed URL. Ctrl+C
-   stops a foreground server.
+## Professional experience
 
-The owner reported successful installation, build, and dev startup before this UI/game
-milestone. These new changes have received static review only; tests, typecheck, build,
-and browser verification still need owner execution. `bun run --bun check` is available
-independently; `bun run --bun preview` inspects an existing build and is not production hosting.
+### Mandiri Utama Finance — Software Engineer
 
-Eight Vitest tests cover the complete solution, denied legitimate access, over-permission,
-ownership, branch boundaries, self-approval, auditor restrictions, and independent resets.
-The game evaluates 27 scenarios and invalidates stale results whenever policy changes.
-It is an educational simulation, not production authorization or a security audit.
+**2025–Present**
 
-## Formatting and comments
+My current work covers end-to-end feature delivery, beginning with requirements analysis and
+continuing through technical design, implementation, integration, and deployment preparation.
+Responsibilities include designing REST APIs, integrating mini-app experiences, implementing
+role-based access for head-office and branch workflows, and supporting collaboration across teams.
 
-Prettier uses two spaces, single quotes, semicolons, a 100-character print width,
-and LF line endings. The Astro parser is selected explicitly for `.astro` files.
-The official Astro plugin is pinned to the stable `0.14.1` release, while Prettier
-is pinned to `3.9.6`. Review formatted page spacing before accepting changes.
-Configuration follows the [official Astro plugin guide](https://github.com/withastro/prettier-plugin-astro).
+### Nusantara Duta Solusindo — Software Engineer
 
-From `D:\Project\portofolio-cv`, run these steps manually:
+**2022–2025**
 
-1. `bun install` installs dependencies and synchronizes `bun.lock`.
-2. `bun run --bun format` formats supported source, configuration, and documentation files.
-3. `bun run --bun format:check` should report that all included files match the configuration.
-4. `bun run --bun test` verifies the game rules still pass.
-5. `bun run --bun build` checks types and produces the production build.
+My work included frontend and backend development, microservice-related implementation, API and UI
+delivery, and technical support for client teams. I also investigated performance bottlenecks,
+coordinated engineering work, answered technical and business-flow questions, and mentored junior
+engineers.
 
-The formatter ignores generated output, installed dependencies, assets, the Bun lockfile,
-and repository instruction files. Installation and repository-wide formatting are pending
-owner execution; editor cleanup is not a substitute for a successful Prettier check.
-Comments use short English explanations for lifecycle, state transitions, business rules,
-and cleanup. Avoid repeating obvious code or adding a comment to every line.
+## Selected work
 
-## Content and roadmap
+### MUF Super Web App
 
-Project entries default to `draft: true`; none currently have public detail routes.
-The flag alone does not prevent publication: future route generation and listings
-must use the published-only query. Confirm stacks, constraints, contribution boundaries,
-decisions, outcomes, and public-safe diagrams before publishing. Employment years
-must not be reused as project dates.
+An integrated experience connecting mini-apps, REST APIs, and role-based access across head-office
+and branch workflows. My contribution spans requirements analysis, feature development, integration
+coordination, API design, access-control implementation, and deployment support.
 
-Confirmed employment: Nusantara Duta Solusindo, 2022–2025; Mandiri Utama Finance,
-2025–Present. Month precision is unknown. WhatsApp needs public-number confirmation,
-and a CV download needs an approved PDF. Original starter assets remain unused.
+### AROA Bank SMBCI Phase 2
 
-1. Verify this milestone at 360, 768, and 1440 CSS pixels, including the 404 route.
-2. Content: complete case studies and published-only project list/detail routes.
-   Homepage snapshots are factual summaries with labeled concept diagrams, not case-study publication.
-3. Refine visual hierarchy, mobile layout, and scene framing after browser review.
-4. Playground: expand to API Performance Lab and System Builder after validating the first game.
-5. Release: confirmed domain, canonical/OG URL and image/sitemap, CV/contact, manual
-   accessibility/performance checks, and Vercel deployment.
+A client-facing engineering project involving UI and API development, technical support, and
+coordination of a four-engineer team. My contribution also included mentoring junior engineers,
+investigating performance bottlenecks, introducing JMeter for performance testing, and implementing
+Redis caching.
 
-Before advancing, verify navigation, email/social links, wrapping, keyboard focus,
-and console errors against the owner-started server. Test scene controls, scrolling,
-reduced motion, WebGL unavailable/context loss, and repeated navigation. Disable JavaScript
-to confirm the portfolio and static scene remain readable. In the game, test a failing
-policy, the correct policy, edits after results, and reset. A correct solution uses agent
-own-read/own-edit/no-approve, manager branch-read/no-edit/branch-approve, auditor
-all-read/no-edit/no-approve, and the self-approval safeguard enabled.
+### Report AML
 
-## Original starter reference (historical)
+A reporting project focused on translating business requirements into a technical solution. My work
+included data-structure and REST API design, development and deployment environment preparation,
+cross-team discussions, implementation support, and junior developer mentoring.
 
-The material below describes the original scaffold, not the current architecture.
+These summaries describe confirmed responsibilities. Detailed stacks, constraints, measurable
+outcomes, and public-safe case-study material are still being prepared before publication.
 
-```sh
-bun create astro@latest --template basics
+## The portfolio experience
+
+The website combines professional information with small interactive experiences:
+
+- A responsive homepage covering my work, background, experience, and contact details.
+- An interactive Three.js system illustration with mouse, touch, and keyboard controls.
+- Light and dark themes with a smooth transition and a saved visitor preference.
+- An Access Control Challenge that turns authorization rules into a playable engineering exercise.
+- Draft foundations for deeper case studies and future playground experiments.
+- Accessible navigation, reduced-motion support, mobile-friendly layouts, and static fallbacks.
+
+The playful elements are educational simulations. They are not production benchmarks, security
+audits, or representations of confidential employer systems.
+
+## Built with
+
+- Astro and TypeScript for the site foundation.
+- React for stateful game interactions.
+- Three.js for the interactive system scene.
+- GSAP and ScrollTrigger for purposeful motion.
+- Markdown and Astro Content Collections for project drafts.
+- Vitest for the Access Control Challenge rules.
+- Custom CSS for the visual system, responsive layout, and themes.
+- Bun 1.4.2 for package management and project scripts.
+
+## Run locally
+
+Requirements:
+
+- [Bun 1.4.2](https://bun.com/)
+
+Install dependencies:
+
+```powershell
+bun install
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Start the development server:
 
-## 🚀 Project Structure
+```powershell
+bun run --bun dev
+```
 
-Inside of your Astro project, you'll see the following folders and files:
+Use the URL printed by Astro in the terminal. Press `Ctrl+C` to stop the server.
+
+## Quality checks
+
+```powershell
+bun run --bun format:check
+bun run --bun test
+bun run --bun build
+```
+
+The build script runs the Astro and TypeScript checks before creating the production output.
+
+## CV availability
+
+The website includes a dedicated CV download area. The approved PDF has not yet been copied into the
+public repository, so the download action remains disabled. Once ready, the stable public filename
+is:
 
 ```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+public/cv/andicha-eka-prastya-cv.pdf
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+Keeping this filename unchanged allows the PDF to be replaced later without changing the website
+code.
 
-## 🧞 Commands
+## Current status
 
-All commands are run from the root of the project, from a terminal:
+The homepage, professional timeline, selected-work summaries, theme switcher, Three.js illustration,
+and first playground challenge are implemented. Full public case studies remain drafts while their
+technical details, contribution boundaries, and publishable outcomes are reviewed.
 
-| Command                      | Action                                            |
-| :--------------------------- | :------------------------------------------------ |
-| `bun install`                | Installs dependencies and synchronizes `bun.lock` |
-| `bun run --bun dev`          | Starts the local development server               |
-| `bun run --bun check`        | Checks Astro components and TypeScript            |
-| `bun run --bun test`         | Runs the Vitest test suite                        |
-| `bun run --bun build`        | Builds the production site to `./dist/`           |
-| `bun run --bun preview`      | Previews an existing production build             |
-| `bun run --bun astro --help` | Displays help for the locally installed Astro CLI |
+Planned improvements include deeper case-study pages, additional system-thinking games, confirmed
+deployment metadata, and final accessibility and performance reviews.
 
-## 👀 Want to learn more?
+## Contact
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- Email: [andichapras@gmail.com](mailto:andichapras@gmail.com)
+- LinkedIn: [linkedin.com/in/andichapras](https://www.linkedin.com/in/andichapras)
+- GitHub: [github.com/andichapras](https://github.com/andichapras)

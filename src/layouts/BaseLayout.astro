@@ -28,7 +28,29 @@ const {
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={siteConfig.name} />
     <meta name="twitter:card" content="summary" />
-    <meta name="theme-color" content="#0c0e12" />
+    <meta name="theme-color" content="#0c0e12" data-theme-color />
+    <script is:inline>
+      (() => {
+        const storageKey = 'portfolio-theme';
+        const root = document.documentElement;
+        let storedTheme = null;
+
+        try {
+          const value = localStorage.getItem(storageKey);
+          if (value === 'light' || value === 'dark') storedTheme = value;
+        } catch {
+          // Storage can be unavailable in restrictive browsing modes.
+        }
+
+        const theme = storedTheme ?? 'dark';
+
+        root.dataset.theme = theme;
+        root.style.colorScheme = theme;
+        document
+          .querySelector('[data-theme-color]')
+          ?.setAttribute('content', theme === 'light' ? '#f4f6f1' : '#0c0e12');
+      })();
+    </script>
     <link rel="icon" type="image/svg+xml" href="/brand-mark.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>

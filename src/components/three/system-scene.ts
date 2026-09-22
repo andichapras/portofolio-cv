@@ -33,20 +33,35 @@ export function mountSystemScene(host: HTMLElement): () => void {
   // 2. Build the layers and track GPU resources for cleanup.
   const geometries: THREE.BufferGeometry[] = [];
   const materials: THREE.Material[] = [];
-  const layers = [0xb6cdfd, 0xd5f88c, 0x8b95a7].map((color, index) => {
+  const layerMaterials: THREE.MeshStandardMaterial[] = [];
+  const edgeMaterials: THREE.LineBasicMaterial[] = [];
+  const layerThemes = [
+    { property: '--scene-layer-interface', fallback: '#b6cdfd' },
+    { property: '--scene-layer-logic', fallback: '#d5f88c' },
+    { property: '--scene-layer-data', fallback: '#8b95a7' },
+  ] as const;
+  const readThemeColor = (property: string, fallback: string) =>
+    getComputedStyle(host).getPropertyValue(property).trim() || fallback;
+  const layers = layerThemes.map(({ property, fallback }, index) => {
     const layer = new THREE.Group();
     const geometry = new THREE.BoxGeometry(3.5, 0.18, 2.5);
     geometries.push(geometry);
-    const material = new THREE.MeshStandardMaterial({ color, roughness: 0.45, metalness: 0.15 });
+    const material = new THREE.MeshStandardMaterial({
+      color: readThemeColor(property, fallback),
+      roughness: 0.45,
+      metalness: 0.15,
+    });
+    layerMaterials.push(material);
     materials.push(material);
     layer.add(new THREE.Mesh(geometry, material));
     const edgeGeometry = new THREE.EdgesGeometry(geometry);
     geometries.push(edgeGeometry);
     const edgeMaterial = new THREE.LineBasicMaterial({
-      color: 0xffffff,
+      color: readThemeColor('--scene-layer-edge', '#ffffff'),
       transparent: true,
       opacity: 0.35,
     });
+    edgeMaterials.push(edgeMaterial);
     materials.push(edgeMaterial);
     layer.add(new THREE.LineSegments(edgeGeometry, edgeMaterial));
     for (let n = 0; n < 3; n++) {
@@ -112,6 +127,47 @@ export function mountSystemScene(host: HTMLElement): () => void {
       ease: 'power2.out',
       overwrite: 'auto',
       onUpdate: draw,
+    });
+  };
+  // Tween scene colors without starting a permanent render loop.
+  const updateSceneTheme = () => {
+    const duration = motion.matches ? 0 : 0.32;
+    const edgeColor = readThemeColor('--scene-layer-edge', '#ffffff');
+
+    if (duration === 0) {
+      layerThemes.forEach(({ property, fallback }, index) => {
+        layerMaterials[index]?.color.set(readThemeColor(property, fallback));
+      });
+      edgeMaterials.forEach((material) => material.color.set(edgeColor));
+      draw();
+      return;
+    }
+
+    layerThemes.forEach(({ property, fallback }, index) => {
+      const material = layerMaterials[index];
+      if (!material) return;
+      const target = new THREE.Color(readThemeColor(property, fallback));
+      gsap.killTweensOf(material.color);
+      gsap.to(material.color, {
+        r: target.r,
+        g: target.g,
+        b: target.b,
+        duration,
+        ease: 'power2.out',
+        onUpdate: draw,
+      });
+    });
+    edgeMaterials.forEach((material) => {
+      const target = new THREE.Color(edgeColor);
+      gsap.killTweensOf(material.color);
+      gsap.to(material.color, {
+        r: target.r,
+        g: target.g,
+        b: target.b,
+        duration,
+        ease: 'power2.out',
+        onUpdate: draw,
+      });
     });
   };
   // 4. Apply decorative scroll motion until the visitor takes control.
@@ -242,6 +298,7 @@ export function mountSystemScene(host: HTMLElement): () => void {
     { signal: events.signal },
   );
   motion.addEventListener('change', updateMotion, { signal: events.signal });
+  window.addEventListener('portfolio:themechange', updateSceneTheme, { signal: events.signal });
   document.addEventListener(
     'visibilitychange',
     () => {
@@ -260,6 +317,8 @@ export function mountSystemScene(host: HTMLElement): () => void {
     visibility.disconnect();
     trigger?.kill();
     gsap.killTweensOf(state);
+    layerMaterials.forEach((material) => gsap.killTweensOf(material.color));
+    edgeMaterials.forEach((material) => gsap.killTweensOf(material.color));
     geometries.forEach((geometry) => geometry.dispose());
     materials.forEach((material) => material.dispose());
     renderer.dispose();

@@ -7,6 +7,32 @@
   --color-accent: #b6cdfd;
   --color-lime: #d5f88c;
   --color-border: #30343e;
+  --color-action-background: #d5f88c;
+  --color-action-hover: #e2ffb0;
+  --color-action-text: #17200d;
+  --color-selection-background: #d5f88c;
+  --color-selection-text: #151a10;
+  --color-control-background: #0c0e12;
+  --color-control-text: #f1f2ed;
+  --color-control-border: #555b68;
+  --color-success: #d5f88c;
+  --color-warning-border: #685444;
+  --color-warning-text: #f1c99b;
+  --color-contact-border: #717681;
+  --color-scene-start: #24303e;
+  --color-scene-end: #14191f;
+  --color-scene-focus: #ffffff03;
+  --color-scene-border: #b6cdfd80;
+  --color-scene-panel: #26364a;
+  --color-scene-panel-alt: #425034;
+  --color-scene-panel-last: #30343e;
+  --color-scene-panel-text: #e1f9c3;
+  --color-scene-shadow: #080b0f70;
+  --color-scene-hover: #b6cdfd18;
+  --scene-layer-interface: #b6cdfd;
+  --scene-layer-logic: #d5f88c;
+  --scene-layer-data: #8b95a7;
+  --scene-layer-edge: #ffffff;
   --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
   font-family:
     Inter,
@@ -22,6 +48,37 @@
   line-height: 1.65;
   color-scheme: dark;
 }
+:root[data-theme='light'] {
+  --color-background: #f4f6f1;
+  --color-surface: #ffffff;
+  --color-text: #171b20;
+  --color-muted: #5e6671;
+  --color-accent: #3d5f91;
+  --color-lime: #557618;
+  --color-border: #ccd3ca;
+  --color-control-background: #ffffff;
+  --color-control-text: #171b20;
+  --color-control-border: #90998f;
+  --color-success: #42630c;
+  --color-warning-border: #b78755;
+  --color-warning-text: #7c4c19;
+  --color-contact-border: #8a9188;
+  --color-scene-start: #eef4e6;
+  --color-scene-end: #dce5d7;
+  --color-scene-focus: #24321b0a;
+  --color-scene-border: #58728f80;
+  --color-scene-panel: #dbe6f0;
+  --color-scene-panel-alt: #dfe9cb;
+  --color-scene-panel-last: #e3e6e2;
+  --color-scene-panel-text: #30451b;
+  --color-scene-shadow: #27351b26;
+  --color-scene-hover: #55761814;
+  --scene-layer-interface: #789bd4;
+  --scene-layer-logic: #85ad35;
+  --scene-layer-data: #6f7a88;
+  --scene-layer-edge: #33404f;
+  color-scheme: light;
+}
 *,
 *::before,
 *::after {
@@ -33,10 +90,12 @@ html {
 body {
   margin: 0;
   min-width: 320px;
+  color: var(--color-text);
+  background: var(--color-background);
 }
 ::selection {
-  background: var(--color-lime);
-  color: #151a10;
+  background: var(--color-selection-background);
+  color: var(--color-selection-text);
 }
 img,
 svg,
@@ -139,8 +198,8 @@ h3 {
   padding: 0.85rem 1.3rem;
   border: 1px solid transparent;
   border-radius: 6px;
-  background: var(--color-lime);
-  color: #17200d;
+  background: var(--color-action-background);
+  color: var(--color-action-text);
   text-decoration: none;
   font-size: 0.88rem;
   font-weight: 650;
@@ -149,8 +208,8 @@ h3 {
     transform 0.2s;
 }
 .button:hover {
-  background: #e2ffb0;
-  color: #17200d;
+  background: var(--color-action-hover);
+  color: var(--color-action-text);
   transform: translateY(-2px);
 }
 .button.secondary {
@@ -182,13 +241,13 @@ h3 {
   left: 0.5rem;
   z-index: 100;
   padding: 0.75rem 1rem;
-  color: #111;
-  background: var(--color-lime);
+  color: var(--color-action-text);
+  background: var(--color-action-background);
   transform: translateY(-200%);
 }
 .skip-link:focus {
   transform: translateY(0);
-  color: #111;
+  color: var(--color-action-text);
 }
 .site-footer {
   border-top: 1px solid var(--color-border);
@@ -202,6 +261,17 @@ h3 {
 }
 .site-footer p {
   margin: 0;
+}
+/* Animate only a deliberate theme change, never the initial page render. */
+html[data-theme-transition] body,
+html[data-theme-transition]
+  body
+  *:not(.theme-toggle-icon):not(.theme-toggle-track):not(.theme-toggle-thumb),
+html[data-theme-transition] body *::before,
+html[data-theme-transition] body *::after {
+  transition-property: color, background-color, border-color, box-shadow, fill, stroke !important;
+  transition-duration: 320ms !important;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1) !important;
 }
 @media (max-width: 760px) {
   .container {
