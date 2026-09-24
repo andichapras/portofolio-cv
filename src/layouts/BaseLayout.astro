@@ -1,4 +1,7 @@
 ---
+import Analytics from '@vercel/analytics/astro';
+import SpeedInsights from '@vercel/speed-insights/astro';
+
 import { siteConfig } from '@/config/site';
 import '@/styles/global.css';
 import SiteHeader from '@/components/layout/SiteHeader.astro';
@@ -54,6 +57,8 @@ const {
     <link rel="icon" type="image/svg+xml" href="/brand-mark.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <!-- Collect page views across every route that uses this layout. -->
+    <Analytics />
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
@@ -65,5 +70,7 @@ const {
         Built with curiosity. <a href={siteConfig.socials.github}>GitHub ↗</a>
       </p>
     </footer>
+    <!-- Measure real-user performance across every route. -->
+    <SpeedInsights />
   </body>
 </html>
