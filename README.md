@@ -53,12 +53,14 @@ An integrated experience connecting mini-apps, REST APIs, and role-based access 
 and branch workflows. My contribution spans requirements analysis, feature development, integration
 coordination, API design, access-control implementation, and deployment support.
 
-### AROA Bank SMBCI Phase 2
+### AROA Bank SMBCI
 
-A client-facing engineering project involving UI and API development, technical support, and
-coordination of a four-engineer team. My contribution also included mentoring junior engineers,
-investigating performance bottlenecks, introducing JMeter for performance testing, and implementing
-Redis caching.
+A two-phase journey from junior backend and frontend implementation to on-site technical
+coordination during SIT and UAT. In Phase 2, I supported the PM, investigated issues against the
+FSD, updated specifications from BRD revisions, and coordinated fixes with the Technical Lead.
+I also used JMeter, conducted Redis caching R&D for parameter data, and worked with a teammate
+to reproduce the external pentest vendor's findings using Burp Suite before fixing them with
+the team. AROA reached production within the planned timeline as a team delivery outcome.
 
 ### Report AML
 
@@ -66,8 +68,24 @@ A reporting project focused on translating business requirements into a technica
 included data-structure and REST API design, development and deployment environment preparation,
 cross-team discussions, implementation support, and junior developer mentoring.
 
-These summaries describe confirmed responsibilities. Detailed stacks, constraints, measurable
-outcomes, and public-safe case-study material are still being prepared before publication.
+### Frontend Engineering Standardization
+
+A Next.js application template and an internal React library at MUF. A dedicated logging backend
+is planned, not presented as completed work.
+
+### MASS Web App
+
+Enhancements to MUF's legacy Super App, including role-based access control and collaboration
+with the infrastructure team on Datadog-related work.
+
+### Microservice Standardization
+
+Full-stack standardization work at NDS using Next.js, Java 17, Spring Boot, relational databases,
+and Redis, with Docker, nginx, and ngrok as supporting tools.
+
+All six projects share one bilingual Content Collection in `src/content/projects/`. Their public
+detail pages distinguish personal contributions, shared ownership, and planned work. Confidential
+application screenshots and unsupported performance metrics are not published.
 
 ## The portfolio experience
 
@@ -78,7 +96,7 @@ The website combines professional information with small interactive experiences
 - English and Indonesian pages with a language switcher that works without JavaScript.
 - Light and dark themes with a smooth transition and a saved visitor preference.
 - An Access Control Challenge that turns authorization rules into a playable engineering exercise.
-- Draft foundations for deeper case studies and future playground experiments.
+- A swipeable project carousel, a scannable project index, and bilingual project detail pages.
 - Accessible navigation, reduced-motion support, mobile-friendly layouts, and static fallbacks.
 
 The playful elements are educational simulations. They are not production benchmarks, security
@@ -91,8 +109,8 @@ audits, or representations of confidential employer systems.
 - The previous Three.js scene is no longer loaded on the homepage; its source and dependencies
   remain temporarily for a separate cleanup.
 - GSAP and ScrollTrigger for purposeful motion.
-- Markdown and Astro Content Collections for project drafts.
-- Vitest for the Access Control Challenge rules.
+- Markdown and Astro Content Collections for bilingual project content.
+- Vitest for game rules, language helpers, and carousel navigation rules.
 - Custom CSS for the visual system, responsive layout, and themes.
 - Bun 1.4.2 for package management and project scripts.
 
@@ -141,23 +159,29 @@ code.
 
 ## Current status
 
-The homepage, professional timeline, selected-work summaries, theme switcher, bilingual routes,
-and first playground challenge are implemented. Full public case studies remain drafts while their
-technical details, contribution boundaries, and publishable outcomes are reviewed.
+The homepage, professional timeline, six-project carousel, project index and detail pages,
+theme switcher, bilingual routes, and first playground challenge are implemented.
 
-Planned improvements include deeper case-study pages, additional system-thinking games, confirmed
+The carousel uses CSS perspective rather than WebGL, with previous/next buttons, direct project
+selection, keyboard controls, mouse drag, and touch swipes. It never advances automatically.
+Reduced-motion preferences disable transitions; without JavaScript it remains a linked grid.
+The project index provides an alternative to sliding through cards. Runtime and visual review
+of the new carousel remains pending.
+
+Planned improvements include further case-study evidence, additional system-thinking games, confirmed
 deployment metadata, and final accessibility and performance reviews.
 
 ## Languages
 
-English uses the existing URLs (`/`, `/playground/`, and `/playground/access-control/`). Indonesian
+English uses URLs such as `/`, `/projects/`, `/projects/aroa/`, and `/playground/`. Indonesian
 uses the same routes under `/id/`. The URL determines the language, so refreshing, sharing links,
 and navigating within the site retain it. There is no automatic browser-language redirect.
 
 Both versions share page components in `src/components/pages/`. The small helpers in
 `src/lib/i18n.ts` select translated text and build localized links. Company names, technology
-names, and game names are not translated. Draft case studies and the downloadable PDF are not
-automatically translated. The static 404 page offers recovery links in both languages.
+names, and game names are not translated. Project summaries and detail sections have explicit
+English and Indonesian content; the downloadable PDF is not automatically translated.
+The static 404 page offers recovery links in both languages.
 
 Switching language reloads the page and resets an active game attempt. Its evaluation rules are
 the same in both languages. API Performance Lab and System Builder remain planned experiments.

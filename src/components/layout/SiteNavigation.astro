@@ -9,11 +9,12 @@ const locale = getLocale(Astro.url.pathname);
 const t = translate(locale);
 const home = localizedPath('/', locale);
 const onPlayground = localizedPath(Astro.url.pathname, 'en').startsWith('/playground');
+const onProjects = localizedPath(Astro.url.pathname, 'en').startsWith('/projects');
 const items = [
   {
     key: 'work',
     label: t('Work', 'Proyek'),
-    href: `${home}#work`,
+    href: onProjects ? localizedPath('/projects/', locale) : `${home}#work`,
     icon: 'M4 7h16v13H4z M8 7V4h8v3 M4 12h16 M10 12v3h4v-3',
   },
   {
@@ -50,7 +51,13 @@ const items = [
       <a
         href={item.href}
         data-nav-section={item.key}
-        aria-current={item.key === 'playground' && onPlayground ? 'page' : undefined}
+        aria-current={
+          item.key === 'playground' && onPlayground
+            ? 'page'
+            : item.key === 'work' && onProjects
+              ? 'location'
+              : undefined
+        }
       >
         <svg
           viewBox="0 0 24 24"

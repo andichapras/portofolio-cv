@@ -1,9 +1,17 @@
 ---
 import { getLocale, localizedPath } from '@/lib/i18n';
+import { getPublishedProjects } from '@/lib/projects';
 
 const locale = getLocale(Astro.url.pathname);
 // Unknown URLs must not produce links to equally missing translations.
-const routes = ['/', '/playground/', '/playground/access-control/'];
+const projects = await getPublishedProjects();
+const routes = [
+  '/',
+  '/playground/',
+  '/playground/access-control/',
+  '/projects/',
+  ...projects.map((project) => `/projects/${project.id}/`),
+];
 const current = localizedPath(Astro.url.pathname, 'en');
 const normalized = current.endsWith('/') ? current : `${current}/`;
 const path = routes.includes(normalized) ? normalized : '/';

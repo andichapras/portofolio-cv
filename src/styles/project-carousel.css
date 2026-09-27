@@ -1,0 +1,143 @@
+/* The default grid remains useful without JavaScript. */
+.project-stage {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+.carousel-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  margin-bottom: 1rem;
+}
+.carousel-toolbar p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+.project-carousel [hidden] {
+  display: none;
+}
+.carousel-controls {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) 48px;
+  align-items: center;
+  gap: 1rem;
+  max-width: 40rem;
+  margin: 1.5rem auto 0;
+}
+.carousel-controls button,
+.carousel-picker button {
+  min-width: 44px;
+  min-height: 44px;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  background: var(--color-surface);
+  color: var(--color-text);
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease;
+}
+.carousel-controls button {
+  font-size: 1.3rem;
+}
+.carousel-controls button:hover,
+.carousel-picker button:hover {
+  border-color: var(--color-accent);
+}
+.carousel-status {
+  margin: 0;
+  text-align: center;
+  font: 0.75rem/1.6 var(--font-mono);
+}
+.carousel-hint {
+  margin: 0.75rem auto 0;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--color-muted);
+}
+.carousel-picker {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.5rem;
+}
+.carousel-picker button {
+  font: 0.7rem var(--font-mono);
+}
+.carousel-picker button[aria-disabled='true'] {
+  background: var(--color-action-background);
+  color: var(--color-action-text);
+  border-color: transparent;
+  cursor: default;
+}
+/* Overlapping grid items reserve the tallest card's height, including translated text. */
+.project-carousel[data-enhanced] .project-stage {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  perspective: 1400px;
+  overflow: hidden;
+  padding: 2rem 0 2.5rem;
+  touch-action: pan-y pinch-zoom;
+  cursor: grab;
+  user-select: none;
+  border-radius: 24px;
+}
+.project-carousel[data-enhanced] .project-stage:focus-visible {
+  outline-offset: -3px;
+}
+.project-carousel[data-enhanced] .project-slide {
+  grid-area: 1 / 1;
+  width: 62%;
+  max-width: 42rem;
+  justify-self: center;
+  min-width: 0;
+  transform: translateX(calc(var(--offset) * 43% + var(--drag, 0px))) rotateY(var(--turn))
+    scale(var(--scale));
+  opacity: 0.45;
+  transition:
+    transform 560ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 400ms ease;
+}
+.project-carousel[data-enhanced] .project-slide[data-active='true'] {
+  opacity: 1;
+}
+.project-carousel[data-enhanced] .project-slide[data-visible='false'] {
+  opacity: 0;
+}
+.project-carousel[data-dragging] .project-slide {
+  transition: none;
+}
+.project-carousel[data-dragging] .project-stage {
+  cursor: grabbing;
+}
+@media (max-width: 1000px) {
+  .project-stage {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .project-carousel[data-enhanced] .project-slide {
+    width: 76%;
+  }
+}
+@media (max-width: 600px) {
+  .project-stage {
+    grid-template-columns: 1fr;
+  }
+  .project-carousel[data-enhanced] .project-slide {
+    width: 90%;
+    transform: translateX(calc(var(--offset) * 106% + var(--drag, 0px))) scale(var(--scale));
+  }
+  .carousel-controls {
+    gap: 0.5rem;
+  }
+  .carousel-hint {
+    max-width: 35ch;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .project-carousel[data-enhanced] .project-slide {
+    transition: none;
+  }
+}

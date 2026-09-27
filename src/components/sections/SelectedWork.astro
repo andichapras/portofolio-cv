@@ -1,207 +1,102 @@
 ---
-import { getLocale, translate } from '@/lib/i18n';
-const t = translate(getLocale(Astro.url.pathname));
+import ProjectCard from '@/components/projects/ProjectCard.astro';
+import { getPublishedProjects } from '@/lib/projects';
+import { getLocale, localizedPath, translate } from '@/lib/i18n';
+import '@/styles/project-carousel.css';
 
-const projects = [
-  {
-    title: 'MUF Super Web App',
-    company: 'Mandiri Utama Finance',
-    label: t('Connected experiences', 'Pengalaman yang terhubung'),
-    description: t(
-      'Connecting mini-apps, REST APIs, and role-based access across head office and branch workflows.',
-      'Menghubungkan mini-app, REST API, dan akses berbasis peran untuk alur kerja kantor pusat dan cabang.',
-    ),
-    nodes: [t('Head office', 'Kantor pusat'), 'Platform', t('Branches', 'Cabang')],
-    focus: t(
-      'Feature delivery · Integration · Access control',
-      'Pengembangan fitur · Integrasi · Kontrol akses',
-    ),
-  },
-  {
-    title: 'AROA · Phase 2',
-    company: 'Nusantara Duta Solusindo / SMBCI',
-    label: t('Engineering together', 'Berkolaborasi membangun sistem'),
-    description: t(
-      'Coordinating a four-engineer team, building interfaces and APIs, and investigating performance alongside client support.',
-      'Mengoordinasikan empat engineer, membangun antarmuka dan API, serta menginvestigasi performa dan mendukung klien.',
-    ),
-    nodes: [t('Interface', 'Antarmuka'), t('Services', 'Layanan'), 'Data'],
-    focus: t('Team coordination · APIs · Performance', 'Koordinasi tim · API · Performa'),
-  },
-  {
-    title: 'Report AML',
-    company: 'Mandiri Utama Finance',
-    label: t('From requirements to delivery', 'Dari kebutuhan hingga implementasi'),
-    description: t(
-      'Bringing requirements, data and API design, environment preparation, and cross-team delivery into one workflow.',
-      'Menghubungkan analisis kebutuhan, desain data dan API, persiapan environment, serta implementasi lintas tim.',
-    ),
-    nodes: [t('Requirements', 'Kebutuhan'), t('Design', 'Desain'), t('Delivery', 'Implementasi')],
-    focus: t(
-      'System analysis · Data design · Collaboration',
-      'Analisis sistem · Desain data · Kolaborasi',
-    ),
-  },
-];
+const locale = getLocale(Astro.url.pathname);
+const t = translate(locale);
+const projects = await getPublishedProjects();
 ---
 
 <section id="work" class="section" aria-labelledby="work-title">
   <div class="section-heading">
     <div>
-      <p class="eyebrow">
-        <span class="index">01 /</span>
-        {t('Selected work', 'Proyek pilihan')}
-      </p><h2 id="work-title">
-        {t('Real work.', 'Pengalaman nyata.')}<br />{
-          t('Thoughtful solutions.', 'Solusi yang dipikirkan matang.')
-        }
+      <p class="eyebrow"><span class="index">01 /</span>{t('Selected work', 'Proyek pilihan')}</p>
+      <h2 id="work-title">
+        {t('Real work.', 'Pengalaman nyata.')}<br />
+        {t('Thoughtful solutions.', 'Solusi yang dipikirkan matang.')}
       </h2>
-    </div><p class="muted">
+    </div>
+    <p class="muted">
       {
         t(
-          'A few systems I’ve helped shape, build, and deliver.',
-          'Beberapa sistem yang turut saya rancang, bangun, dan implementasikan.',
+          'Six projects. Different challenges. One connected perspective.',
+          'Enam proyek. Beragam tantangan. Satu perspektif yang menyeluruh.',
         )
       }
     </p>
   </div>
-  <div class="work-grid">
-    {
-      projects.map((project, index) => (
-        <article class="work-card">
-          <div
-            class:list={['diagram', `diagram-${index}`]}
-            aria-label={`${t('Concept diagram', 'Diagram konsep')}: ${project.nodes.join(' → ')}`}
+  <div class="project-carousel" data-project-carousel>
+    <div class="carousel-toolbar">
+      <p class="muted">
+        {t('Explore the work behind my experience.', 'Kenali proyek di balik pengalaman saya.')}
+      </p>
+      <a class="text-link" href={localizedPath('/projects/', locale)}>
+        {t('View all projects', 'Lihat semua proyek')}
+        <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+    <div class="carousel-controls" data-carousel-controls hidden>
+      <button
+        type="button"
+        data-previous
+        aria-label={t('Previous project', 'Proyek sebelumnya')}
+        aria-controls="project-stage">←</button
+      >
+      <p class="carousel-status" data-carousel-status aria-live="polite" aria-atomic="true"></p>
+      <button
+        type="button"
+        data-next
+        aria-label={t('Next project', 'Proyek berikutnya')}
+        aria-controls="project-stage">→</button
+      >
+    </div>
+    <p class="carousel-hint" id="project-hint" data-carousel-controls hidden>
+      {
+        t(
+          'Swipe or drag to explore. Use the arrow keys when the cards are focused.',
+          'Geser untuk menjelajah. Gunakan tombol panah saat area kartu mendapat fokus.',
+        )
+      }
+    </p>
+    <div
+      class="project-stage"
+      id="project-stage"
+      data-project-stage
+      aria-label={t('Project cards', 'Kartu proyek')}
+    >
+      {
+        projects.map((project, index) => (
+          <div class="project-slide" data-project-slide data-title={project.data.title}>
+            <ProjectCard project={project} index={index} locale={locale} />
+          </div>
+        ))
+      }
+    </div>
+    <div
+      class="carousel-picker"
+      data-carousel-controls
+      hidden
+      role="group"
+      aria-label={t('Choose a project', 'Pilih proyek')}
+    >
+      {
+        projects.map((project, index) => (
+          <button
+            type="button"
+            data-project-picker={index}
+            aria-label={project.data.title}
+            aria-controls="project-stage"
           >
-            <div class="diagram-top">
-              <>
-                <span>SYS / 0{index + 1}</span>
-                <span>{t('Concept diagram', 'Diagram konsep')}</span>
-              </>
-            </div>
-            <div class="nodes">
-              {project.nodes.map((node, i) => (
-                <>
-                  <span class="node">{node}</span>
-                  {i < 2 && (
-                    <span class="connector" aria-hidden="true">
-                      ↓
-                    </span>
-                  )}
-                </>
-              ))}
-            </div>
-            <span class="diagram-caption">{project.label}</span>
-          </div>
-          <div class="work-copy">
-            <>
-              <p class="eyebrow">{project.company}</p>
-              <h3>{project.title}</h3>
-              <p class="muted">{project.description}</p>
-              <p class="focus">{project.focus}</p>
-            </>
-          </div>
-        </article>
-      ))
-    }
+            <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+          </button>
+        ))
+      }
+    </div>
   </div>
 </section>
-<style>
-  .work-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1.25rem;
-  }
-  .work-card {
-    border: 1px solid var(--color-border);
-    border-radius: 18px;
-    overflow: hidden;
-    background: var(--color-surface);
-  }
-  .diagram {
-    padding: 1.2rem;
-    background: #1b2531;
-    min-height: 240px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    color: #c2d4f5;
-  }
-  .diagram-1 {
-    background: #26241e;
-    color: #e3d5b6;
-  }
-  .diagram-2 {
-    background: #222c25;
-    color: #d5efc8;
-  }
-  .diagram-top {
-    display: flex;
-    justify-content: space-between;
-    font: 0.6rem var(--font-mono);
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-  }
-  .nodes {
-    display: grid;
-    justify-items: center;
-    padding: 1rem;
-  }
-  .node {
-    padding: 0.55rem 1rem;
-    border: 1px solid currentColor;
-    border-radius: 7px;
-    font: 0.75rem var(--font-mono);
-    min-width: 145px;
-    text-align: center;
-    background: #ffffff05;
-  }
-  .connector {
-    opacity: 0.5;
-    line-height: 1.4;
-  }
-  .diagram-caption {
-    font: 0.65rem var(--font-mono);
-    opacity: 0.8;
-  }
-  .work-copy {
-    padding: clamp(1.25rem, 2vw, 1.75rem);
-  }
-  .work-copy .eyebrow {
-    font-size: 0.6rem;
-    min-height: 2rem;
-  }
-  .work-copy h3 {
-    font-size: 1.35rem;
-  }
-  .work-copy .muted {
-    font-size: 0.9rem;
-    line-height: 1.75;
-  }
-  .focus {
-    font: 0.65rem/1.8 var(--font-mono);
-    color: var(--color-accent);
-    margin: 1.5rem 0 0;
-  }
-  @media (max-width: 1050px) {
-    .work-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-    .work-card:last-child {
-      grid-column: 1 / -1;
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    }
-    .diagram {
-      min-height: 220px;
-    }
-  }
-  @media (max-width: 640px) {
-    .work-grid {
-      grid-template-columns: 1fr;
-    }
-    .work-card:last-child {
-      display: block;
-    }
-  }
-</style>
+
+<script>
+  import '@/scripts/project-carousel';
+</script>
