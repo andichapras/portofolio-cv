@@ -24,16 +24,17 @@ try {
       Number.isFinite(state.scrollY)
     ) {
       window.scrollTo({ top: Math.max(0, state.scrollY), behavior: 'instant' });
-      document.querySelector<HTMLElement>('[data-language-link][aria-current]')?.focus({
+      document.querySelector<HTMLElement>('[data-language-link]')?.focus({
         preventScroll: true,
       });
       if (!nativeTransitions && !reducedMotion.matches) {
-        document
-          .querySelector('main')
-          ?.animate(
-            [{ opacity: 0.6, transform: 'translateY(5px)' }, { opacity: 1, transform: 'none' }],
-            { duration: 220, easing: 'ease-out' },
-          );
+        document.querySelector('main')?.animate(
+          [
+            { opacity: 0.6, transform: 'translateY(5px)' },
+            { opacity: 1, transform: 'none' },
+          ],
+          { duration: 220, easing: 'ease-out' },
+        );
       }
     }
   }
@@ -43,11 +44,8 @@ try {
 
 document.querySelectorAll<HTMLAnchorElement>('[data-language-link]').forEach((link) => {
   link.addEventListener('click', async (event) => {
-    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-    if (link.hasAttribute('aria-current')) {
-      event.preventDefault();
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)
       return;
-    }
     if (navigating) {
       event.preventDefault();
       return;

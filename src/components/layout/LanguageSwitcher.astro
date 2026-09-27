@@ -7,26 +7,25 @@ const routes = ['/', '/playground/', '/playground/access-control/'];
 const current = localizedPath(Astro.url.pathname, 'en');
 const normalized = current.endsWith('/') ? current : `${current}/`;
 const path = routes.includes(normalized) ? normalized : '/';
+const targetLocale = locale === 'en' ? 'id' : 'en';
+const label =
+  locale === 'en'
+    ? 'Current language: English. Switch to Indonesian.'
+    : 'Bahasa saat ini: Indonesia. Beralih ke bahasa Inggris.';
 ---
 
-<div class="language-switcher" role="group" aria-label={locale === 'id' ? 'Bahasa' : 'Language'}>
-  <a
-    data-language-link
-    href={localizedPath(path, 'en')}
-    lang="en"
-    hreflang="en"
-    aria-label="English"
-    aria-current={locale === 'en' ? 'true' : undefined}>EN</a
-  >
-  <a
-    data-language-link
-    href={localizedPath(path, 'id')}
-    lang="id"
-    hreflang="id"
-    aria-label="Bahasa Indonesia"
-    aria-current={locale === 'id' ? 'true' : undefined}>ID</a
-  >
-</div>
+<!-- One real link makes the entire control clickable and keeps both routes discoverable. -->
+<a
+  class="language-switcher"
+  data-language-link
+  href={localizedPath(path, targetLocale)}
+  hreflang={targetLocale}
+  aria-label={label}
+  title={label}
+>
+  <span class:list={{ selected: locale === 'en' }} aria-hidden="true">EN</span>
+  <span class:list={{ selected: locale === 'id' }} aria-hidden="true">ID</span>
+</a>
 
 <script>
   import '@/scripts/language-navigation';
@@ -41,8 +40,15 @@ const path = routes.includes(normalized) ? normalized : '/';
     border-radius: 999px;
     padding: 3px;
     flex-shrink: 0;
+    text-decoration: none;
+    color: var(--color-muted);
+    font: 0.7rem var(--font-mono);
+    transition: border-color 180ms ease;
   }
-  a {
+  .language-switcher:hover {
+    border-color: var(--color-accent);
+  }
+  span {
     display: grid;
     place-items: center;
     flex: 1;
@@ -50,13 +56,11 @@ const path = routes.includes(normalized) ? normalized : '/';
     height: 100%;
     border-radius: 999px;
     color: var(--color-muted);
-    text-decoration: none;
-    font: 0.7rem var(--font-mono);
     transition:
       background-color 180ms ease,
       color 180ms ease;
   }
-  a[aria-current] {
+  .selected {
     background: var(--color-action-background);
     color: var(--color-action-text);
   }
