@@ -1,0 +1,63 @@
+---
+import { getLocale, localizedPath } from '@/lib/i18n';
+
+const locale = getLocale(Astro.url.pathname);
+// Unknown URLs must not produce links to equally missing translations.
+const routes = ['/', '/playground/', '/playground/access-control/'];
+const current = localizedPath(Astro.url.pathname, 'en');
+const normalized = current.endsWith('/') ? current : `${current}/`;
+const path = routes.includes(normalized) ? normalized : '/';
+---
+
+<div class="language-switcher" role="group" aria-label={locale === 'id' ? 'Bahasa' : 'Language'}>
+  <a
+    data-language-link
+    href={localizedPath(path, 'en')}
+    lang="en"
+    hreflang="en"
+    aria-label="English"
+    aria-current={locale === 'en' ? 'true' : undefined}>EN</a
+  >
+  <a
+    data-language-link
+    href={localizedPath(path, 'id')}
+    lang="id"
+    hreflang="id"
+    aria-label="Bahasa Indonesia"
+    aria-current={locale === 'id' ? 'true' : undefined}>ID</a
+  >
+</div>
+
+<script>
+  import '@/scripts/language-navigation';
+</script>
+
+<style>
+  .language-switcher {
+    display: flex;
+    width: var(--header-control-width, 88px);
+    height: var(--header-control-height, 44px);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    padding: 3px;
+    flex-shrink: 0;
+  }
+  a {
+    display: grid;
+    place-items: center;
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    border-radius: 999px;
+    color: var(--color-muted);
+    text-decoration: none;
+    font: 0.7rem var(--font-mono);
+    transition:
+      background-color 180ms ease,
+      color 180ms ease;
+  }
+  a[aria-current] {
+    background: var(--color-action-background);
+    color: var(--color-action-text);
+  }
+</style>

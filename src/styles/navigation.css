@@ -1,0 +1,84 @@
+/* Native transitions keep the static routes and normal browser navigation intact. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+
+  ::view-transition-old(root) {
+    animation: page-leave 160ms ease-out both;
+  }
+
+  ::view-transition-new(root) {
+    animation: page-enter 260ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .site-header {
+    view-transition-name: site-header;
+  }
+
+  .navigation-bottom {
+    view-transition-name: bottom-navigation;
+  }
+
+  ::view-transition-group(bottom-navigation) {
+    animation-duration: 260ms;
+  }
+
+  ::view-transition-old(bottom-navigation),
+  ::view-transition-new(bottom-navigation) {
+    animation-duration: 180ms;
+  }
+
+  /* Keep the unchanged theme control out of the translated header's cross-fade. */
+  .theme-toggle {
+    view-transition-name: theme-control;
+  }
+
+  ::view-transition-group(theme-control) {
+    animation-duration: 260ms;
+  }
+
+  ::view-transition-old(theme-control) {
+    animation: none;
+    opacity: 0;
+  }
+
+  ::view-transition-new(theme-control) {
+    animation: none;
+    opacity: 1;
+    mix-blend-mode: normal;
+  }
+
+  ::view-transition-group(site-header) {
+    animation-duration: 260ms;
+  }
+
+  ::view-transition-old(site-header),
+  ::view-transition-new(site-header) {
+    animation-duration: 180ms;
+  }
+}
+
+@keyframes page-leave {
+  to {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+}

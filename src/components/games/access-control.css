@@ -6,6 +6,8 @@
 }
 .access-toolbar {
   display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
   justify-content: space-between;
   font: 0.7rem var(--font-mono);
   color: var(--color-muted);
@@ -45,6 +47,8 @@
   margin-bottom: 0.4rem;
 }
 .access-role select {
+  min-width: 0;
+  max-width: 100%;
   width: 100%;
   min-height: 44px;
   background: var(--color-control-background);
@@ -147,12 +151,22 @@
   font-family: var(--font-mono);
   color: var(--color-text);
 }
-@media (max-width: 800px) {
-  .access-roles,
+@media (max-width: 1050px) {
+  .access-roles {
+    grid-template-columns: 1fr;
+  }
+  .access-role p {
+    min-height: 0;
+  }
+}
+@media (max-width: 640px) {
   .access-feedback ul {
     grid-template-columns: 1fr;
   }
   .access-role p {
     min-height: 0;
+  }
+  .access-actions .button {
+    width: 100%;
   }
 }

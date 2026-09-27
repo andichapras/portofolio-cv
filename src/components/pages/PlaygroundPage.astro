@@ -1,0 +1,177 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getLocale, localizedPath, translate } from '@/lib/i18n';
+const locale = getLocale(Astro.url.pathname);
+const t = translate(locale);
+---
+
+<BaseLayout
+  title="Playground | Andicha Eka Prastya"
+  description={t(
+    'Small, playable engineering experiments. Explore access control and the decisions behind good systems.',
+    'Eksperimen interaktif tentang kontrol akses dan keputusan di balik sistem yang baik.',
+  )}
+>
+  <main id="main-content" class="container section" tabindex="-1">
+    <p class="eyebrow">
+      <span class="index">LAB /</span>
+      {t('A little room to experiment', 'Ruang untuk bereksperimen')}
+    </p>
+    <h1>
+      {t('Serious thinking.', 'Berpikir serius.')}<br /><span
+        >{t('Playful learning.', 'Belajar sambil bermain.')}</span
+      >
+    </h1>
+    <p class="intro muted">
+      {
+        t(
+          'Small experiments about the decisions behind everyday systems. No sign-up. No leaderboard pressure. Just curiosity.',
+          'Eksperimen kecil tentang keputusan di balik sistem sehari-hari. Tanpa pendaftaran dan persaingan peringkat. Cukup rasa ingin tahu.',
+        )
+      }
+    </p>
+    <article class="experiment">
+      <div>
+        <p class="eyebrow">01 / {t('Ready to play', 'Siap dimainkan')}</p>
+        <h2>Access Control<br />Challenge</h2>
+        <p>
+          {
+            t(
+              'Who can read, edit, or approve a record? Design a policy that keeps work moving without opening the wrong doors.',
+              'Siapa yang boleh membaca, mengubah, atau menyetujui data? Rancang aturan agar pekerjaan berjalan tanpa memberikan akses yang tidak semestinya.',
+            )
+          }
+        </p>
+        <div class="tags">
+          <span class="pill">{t('Logic puzzle', 'Teka-teki logika')}</span>
+          <span class="pill">{t('27 checks', '27 pemeriksaan')}</span>
+          <span class="pill">{t('Browser only', 'Langsung di browser')}</span>
+        </div>
+        <a class="button" href={localizedPath('/playground/access-control/', locale)}
+          >{t('Enter the challenge', 'Mulai tantangan')} ↗</a
+        >
+      </div>
+      <div class="terminal" aria-hidden="true">
+        <p>&gt; {t('load policy', 'muat aturan')}</p>
+        <p>{t('AGENT', 'AGEN')} <span>●</span></p>
+        <p>{t('MANAGER', 'MANAJER')} <span>●</span></p>
+        <p>AUDITOR <span>●</span></p>
+        <p>&gt; {t('awaiting your rules', 'menunggu aturanmu')}<span class="cursor">_</span></p>
+      </div>
+    </article>
+    <div class="coming">
+      <div>
+        <p class="eyebrow">{t('On the drawing board', 'Dalam rencana')}</p>
+        <h3>API Performance Lab</h3>
+        <p class="muted">
+          {
+            t(
+              'An upcoming experiment in latency, caching, and trade-offs.',
+              'Rencana eksperimen tentang latensi, caching, dan konsekuensi setiap pilihan.',
+            )
+          }
+        </p>
+      </div>
+      <div>
+        <p class="eyebrow">{t('On the drawing board', 'Dalam rencana')}</p>
+        <h3>System Builder</h3>
+        <p class="muted">
+          {
+            t(
+              'An upcoming experiment in connecting the right components.',
+              'Rencana eksperimen tentang menghubungkan komponen sistem yang tepat.',
+            )
+          }
+        </p>
+      </div>
+    </div>
+    <p class="note muted">
+      {
+        t(
+          'Educational simulations—not production benchmarks or security audits.',
+          'Simulasi edukatif—bukan tolok ukur produksi atau audit keamanan.',
+        )
+      }
+    </p>
+  </main>
+</BaseLayout>
+<style>
+  h1 {
+    font-size: clamp(2.25rem, 6vw, 5rem);
+    line-height: 1.05;
+    letter-spacing: -0.055em;
+  }
+  h1 span {
+    color: var(--color-accent);
+  }
+  .intro {
+    max-width: 570px;
+    font-size: 1.1rem;
+    margin: 2rem 0 3.5rem;
+  }
+  .experiment {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: clamp(1.5rem, 4vw, 3rem);
+    padding: clamp(1.5rem, 4vw, 3.5rem);
+    border: 1px solid var(--color-border);
+    border-radius: 20px;
+    background: var(--color-surface);
+  }
+  .experiment h2 {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+  }
+  .experiment p {
+    max-width: 500px;
+  }
+  .tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin: 1.5rem 0;
+  }
+  .terminal {
+    align-self: center;
+    background: #d5f88c;
+    color: #152019;
+    border-radius: 12px;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    font: clamp(0.75rem, 1.5vw, 1rem)/2 var(--font-mono);
+    transform: none;
+  }
+  .terminal p {
+    display: flex;
+    justify-content: space-between;
+  }
+  .terminal p:first-child,
+  .terminal p:last-child {
+    opacity: 0.65;
+  }
+  .coming {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+  .coming > div {
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border);
+  }
+  .note {
+    font-size: 0.8rem;
+    margin-top: 3rem;
+  }
+  @media (max-width: 1000px) {
+    .experiment {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 640px) {
+    .coming {
+      grid-template-columns: 1fr;
+    }
+    .terminal {
+      transform: none;
+    }
+  }
+</style>

@@ -1,6 +1,9 @@
 ---
 import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { getLocale, translate } from '@/lib/i18n';
+
+const t = translate(getLocale(Astro.url.pathname));
 
 // Keep this filename stable so replacing the PDF does not require a code change.
 const filename = 'andicha-eka-prastya-cv.pdf';
@@ -14,15 +17,21 @@ const available = existsSync(resolve('public', 'cv', filename));
   {
     available ? (
       <a class="button secondary" href={downloadUrl} download={filename}>
-        Download CV <span aria-hidden="true">↓</span>
+        {t('Download CV', 'Unduh CV')} <span aria-hidden="true">↓</span>
       </a>
     ) : (
       <button class="button secondary" type="button" disabled>
-        Download CV <span aria-hidden="true">↓</span>
+        {t('Download CV', 'Unduh CV')} <span aria-hidden="true">↓</span>
       </button>
     )
   }
-  <p class="muted">{available ? 'PDF · A closer look at my experience.' : 'PDF coming soon.'}</p>
+  <p class="muted">
+    {
+      available
+        ? t('PDF · A closer look at my experience.', 'PDF · Kenali pengalaman saya lebih jauh.')
+        : t('PDF coming soon.', 'PDF belum tersedia.')
+    }
+  </p>
 </div>
 
 <style>

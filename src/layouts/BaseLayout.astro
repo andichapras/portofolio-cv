@@ -4,28 +4,64 @@ import SpeedInsights from '@vercel/speed-insights/astro';
 
 import { siteConfig } from '@/config/site';
 import '@/styles/global.css';
+import '@/styles/navigation.css';
 import SiteHeader from '@/components/layout/SiteHeader.astro';
+import { getLocale, localizedPath, translate, type Locale } from '@/lib/i18n';
 
 interface Props {
   title?: string;
   description?: string;
-  language?: string;
+  language?: Locale;
+  noindex?: boolean;
 }
 
 // Pages can override metadata while keeping the shared site defaults.
+const language = Astro.props.language ?? getLocale(Astro.url.pathname);
+const t = translate(language);
 const {
-  title = siteConfig.title,
-  description = siteConfig.description,
-  language = siteConfig.language,
+  title = t(siteConfig.title, 'Andicha Eka Prastya | Software Engineer — Analisis & Desain Sistem'),
+  description = t(
+    siteConfig.description,
+    'Portofolio Andicha Eka Prastya, Software Engineer dengan fokus analisis kebutuhan dan desain sistem di Jakarta, Indonesia.',
+  ),
+  noindex = false,
 } = Astro.props;
+// Absolute SEO URLs require a confirmed deployment origin, never localhost.
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefined;
 ---
 
 <!doctype html>
 <html lang={language}>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
+    {canonical && !noindex && <link rel="canonical" href={canonical} />}
+    {
+      Astro.site && !noindex && (
+        <>
+          <link
+            rel="alternate"
+            hreflang="en"
+            href={new URL(localizedPath(Astro.url.pathname, 'en'), Astro.site)}
+          />
+          <link
+            rel="alternate"
+            hreflang="id"
+            href={new URL(localizedPath(Astro.url.pathname, 'id'), Astro.site)}
+          />
+          <link
+            rel="alternate"
+            hreflang="x-default"
+            href={new URL(localizedPath(Astro.url.pathname, 'en'), Astro.site)}
+          />
+        </>
+      )
+    }
+    <meta property="og:locale" content={language === 'id' ? 'id_ID' : 'en_US'} />
+    <meta property="og:locale:alternate" content={language === 'id' ? 'en_US' : 'id_ID'} />
+    {canonical && !noindex && <meta property="og:url" content={canonical} />}
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
@@ -61,13 +97,14 @@ const {
     <Analytics />
   </head>
   <body>
-    <a class="skip-link" href="#main-content">Skip to content</a>
+    <a class="skip-link" href="#main-content">{t('Skip to content', 'Lewati ke konten')}</a>
     <SiteHeader />
     <!-- Each page supplies its own main content inside the shared document shell. -->
     <slot />
     <footer class="container site-footer">
       <p>© {new Date().getFullYear()} {siteConfig.name}</p><p>
-        Built with curiosity. <a href={siteConfig.socials.github}>GitHub ↗</a>
+        {t('Built with curiosity.', 'Dibangun dengan rasa ingin tahu.')}
+        <a href={siteConfig.socials.github}>GitHub ↗</a>
       </p>
     </footer>
     <!-- Measure real-user performance across every route. -->

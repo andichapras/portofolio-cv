@@ -1,0 +1,484 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ExperienceSection from '@/components/sections/ExperienceSection.astro';
+import SelectedWork from '@/components/sections/SelectedWork.astro';
+import { siteConfig } from '@/config/site';
+import CvDownload from '@/components/sections/CvDownload.astro';
+import { getLocale, localizedPath, translate } from '@/lib/i18n';
+
+const locale = getLocale(Astro.url.pathname);
+const t = translate(locale);
+const playground = localizedPath('/playground/', locale);
+const game = localizedPath('/playground/access-control/', locale);
+---
+
+<BaseLayout>
+  <main id="main-content" tabindex="-1">
+    <section class="hero container" aria-labelledby="hero-heading">
+      <div class="hero-copy">
+        <p class="eyebrow hero-label">
+          <span class="signal" aria-hidden="true"></span> Andicha Eka Prastya / Software Engineer
+        </p>
+        <h1 id="hero-heading">
+          {t('Business needs.', 'Kebutuhan bisnis.')}<br />{
+            t('Clear analysis.', 'Analisis yang jelas.')
+          }<br /><span>{t('Practical solutions.', 'Solusi yang tepat.')}</span>
+        </h1>
+        <p class="intro">
+          {
+            t(
+              "I'm Pras. I connect business needs with technical solutions through requirements analysis, system design, and hands-on development.",
+              'Saya Pras. Saya menghubungkan kebutuhan bisnis dengan solusi teknis melalui analisis kebutuhan, desain sistem, dan pengembangan aplikasi.',
+            )
+          }
+        </p>
+        <div class="hero-actions">
+          <a class="button" href="#work"
+            >{t('Explore my work', 'Lihat proyek saya')} <span aria-hidden="true">↘</span></a
+          ><a class="text-link" href={playground}
+            >{t('Or, play a little', 'Atau, coba bermain')} <span aria-hidden="true">↗</span></a
+          >
+        </div>
+        <p class="hero-location">
+          <span aria-hidden="true">◎</span>
+          {t('Based in Jakarta, Indonesia', 'Berdomisili di Jakarta, Indonesia')}
+        </p>
+      </div>
+      <aside class="focus-card" aria-labelledby="focus-heading">
+        <p class="eyebrow">{t('My focus', 'Fokus saya')}</p>
+        <h2 id="focus-heading">
+          {t('Understand. Connect. Deliver.', 'Pahami. Hubungkan. Wujudkan.')}
+        </h2>
+        <p class="muted">
+          {
+            t(
+              'Software Engineer, working toward a System Analyst role. I value clear communication, practical problem-solving, and collaboration across teams.',
+              'Software Engineer yang ingin melangkah menjadi System Analyst. Saya mengutamakan komunikasi yang jelas, pemecahan masalah, dan kolaborasi lintas tim.',
+            )
+          }
+        </p>
+        <a class="text-link" href="#experience">{t('My experience', 'Pengalaman saya')} ↘</a>
+      </aside>
+    </section>
+    <div class="expertise-strip">
+      <div class="container strip-inner">
+        <span>{t('Business understanding', 'Pemahaman bisnis')}</span><span aria-hidden="true"
+          >+</span
+        ><span>{t('System thinking', 'Pemikiran sistem')}</span><span aria-hidden="true">+</span
+        ><span>{t('End-to-end engineering', 'Pengembangan menyeluruh')}</span>
+      </div>
+    </div>
+    <div class="container">
+      <SelectedWork />
+      <section id="about" class="section about" aria-labelledby="about-heading">
+        <div>
+          <p class="eyebrow">
+            <span class="index">02 /</span>
+            {t('Behind the build', 'Di balik karya')}
+          </p><h2 id="about-heading">
+            {t('Curious about the why.', 'Memahami alasannya.')}<br /><span class="muted"
+              >{t('Careful with the how.', 'Memikirkan caranya.')}</span
+            >
+          </h2>
+        </div>
+        <div class="about-copy">
+          <p>
+            {
+              t(
+                'I work at the intersection of software engineering and system analysis. My work spans frontend and backend development, API design, integration, and translating business processes into technical solutions.',
+                'Saya bekerja di bidang software engineering dan analisis sistem. Pengalaman saya mencakup pengembangan frontend dan backend, desain API, integrasi, serta penerjemahan proses bisnis menjadi solusi teknis.',
+              )
+            }
+          </p><p class="muted">
+            {
+              t(
+                'I enjoy connecting the dots: listening to stakeholders, making trade-offs explicit, and helping teams move from a requirement to a working system.',
+                'Saya senang menghubungkan berbagai sudut pandang: mendengarkan stakeholder, menjelaskan konsekuensi setiap pilihan, dan membantu tim mewujudkan kebutuhan menjadi sistem yang berfungsi.',
+              )
+            }
+          </p><a class="text-link" href={siteConfig.socials.linkedin}
+            >{t('More about my background', 'Kenali latar belakang saya')}
+            <span aria-hidden="true">↗</span></a
+          >
+        </div>
+      </section>
+      <ExperienceSection />
+      <section class="lab section" aria-labelledby="lab-heading">
+        <div class="lab-copy">
+          <p class="eyebrow">
+            <span class="index">04 /</span>
+            {t('A little less serious. Still engineering.', 'Lebih santai. Tetap belajar sistem.')}
+          </p><h2 id="lab-heading">
+            {t('Good systems.', 'Sistem yang baik.')}<br />{
+              t('Playful experiments.', 'Eksperimen yang seru.')
+            }
+          </h2><p>
+            {
+              t(
+                'What if the best way to understand a system is to play with its rules? Step into the lab and put your engineering intuition to work.',
+                'Bagaimana jika memahami sistem dimulai dari bermain dengan aturannya? Masuk ke lab dan coba gunakan intuisi pemecahan masalahmu.',
+              )
+            }
+          </p><a class="button" href={game}
+            >{t('Play Access Control', 'Mainkan Access Control')}
+            <span aria-hidden="true">↗</span></a
+          ><p class="lab-meta">
+            {
+              t(
+                'Interactive challenge / No sign-up / Your browser only',
+                'Tantangan interaktif / Tanpa pendaftaran / Langsung di browser',
+              )
+            }
+          </p>
+        </div>
+        <a
+          class="lab-preview"
+          href={game}
+          aria-label={t('Play Access Control Challenge', 'Mainkan Access Control Challenge')}
+        >
+          <div class="preview-top">
+            <span>ACCESS_CONTROL.EXE</span><span class="preview-status">{t('READY', 'SIAP')}</span>
+          </div>
+          <div class="permission-row">
+            <span>{t('Agent', 'Agen')}</span><span class="allow"
+              >{t('READ OWN', 'BACA MILIK SENDIRI')} ✓</span
+            >
+          </div>
+          <div class="permission-row">
+            <span>{t('Manager', 'Manajer')}</span><span class="pending"
+              >{t('APPROVE', 'SETUJUI')} ?</span
+            >
+          </div>
+          <div class="permission-row">
+            <span>Auditor</span><span class="deny">{t('EDIT', 'UBAH')} ×</span>
+          </div>
+          <div class="preview-bottom">
+            <span
+              >{t('Who gets access?', 'Siapa yang boleh mengakses?')}<br /><strong
+                >{t('You make the rules.', 'Kamu tentukan aturannya.')}</strong
+              ></span
+            ><span class="play-icon" aria-hidden="true">↗</span>
+          </div>
+        </a>
+      </section>
+      <section id="contact" class="section contact" aria-labelledby="contact-heading">
+        <p class="eyebrow">
+          <span class="index">05 /</span>
+          {t('Start a conversation', 'Mulai percakapan')}
+        </p>
+        <h2 id="contact-heading">
+          {t('Have something', 'Ada ide')}<br />{t('in mind', 'atau peluang')}<span>?</span>
+        </h2>
+        <div class="contact-bottom">
+          <p class="muted">
+            {
+              t(
+                'An opportunity, a collaboration, or a good technical question.',
+                'Peluang kerja, kolaborasi, atau pertanyaan teknis.',
+              )
+            }<br />{t("I'd love to hear from you.", 'Saya senang mendengarnya.')}
+          </p><a class="contact-email" href={`mailto:${siteConfig.email}`}
+            >{siteConfig.email} <span aria-hidden="true">↗</span></a
+          >
+        </div>
+        <CvDownload />
+        <div class="socials">
+          <a href={siteConfig.socials.linkedin}>LinkedIn ↗</a><a href={siteConfig.socials.github}
+            >GitHub ↗</a
+          >
+        </div>
+      </section>
+    </div>
+  </main>
+</BaseLayout>
+<style>
+  .focus-card {
+    padding: clamp(1.5rem, 4vw, 3rem);
+    border: 1px solid var(--color-border);
+    border-radius: 20px;
+    background: var(--color-surface);
+  }
+  .focus-card h2 {
+    font-size: clamp(1.7rem, 3vw, 2.6rem);
+  }
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(2rem, 5vw, 5rem);
+    padding-block: clamp(3rem, 7vw, 6.5rem);
+  }
+  .hero-label {
+    color: var(--color-text);
+    letter-spacing: 0.06em;
+  }
+  .hero-copy {
+    min-width: 0;
+  }
+  .signal {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: var(--color-lime);
+    margin-right: 0.6rem;
+    border-radius: 50%;
+  }
+  h1 {
+    font-size: clamp(2.25rem, 4.6vw, 4.5rem);
+    line-height: 1.09;
+    letter-spacing: -0.055em;
+    margin-block: 2rem 1.5rem;
+  }
+  h1 > span {
+    color: var(--color-accent);
+  }
+  .intro {
+    max-width: 45ch;
+    color: var(--color-muted);
+    font-size: 1rem;
+  }
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: center;
+    margin-top: 2rem;
+  }
+  .hero-location {
+    color: var(--color-muted);
+    font: 0.7rem/1.5 var(--font-mono);
+    margin-top: 3rem;
+  }
+  .hero-location span {
+    margin-right: 0.5rem;
+  }
+  .expertise-strip {
+    border-block: 1px solid var(--color-border);
+  }
+  .strip-inner {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: center;
+    text-align: center;
+    padding-block: 1.6rem;
+    font: 0.72rem/1.5 var(--font-mono);
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+  }
+  .strip-inner span:nth-child(even) {
+    color: var(--color-lime);
+  }
+  .about {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 5rem);
+    border-top: 1px solid var(--color-border);
+  }
+  .about h2 {
+    font-size: clamp(2rem, 3.7vw, 3.2rem);
+  }
+  .about-copy {
+    padding-top: 2rem;
+    font-size: 1.05rem;
+  }
+  .lab {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+    border-top: 1px solid var(--color-border);
+  }
+  .lab-copy > p:not(.eyebrow) {
+    max-width: 45ch;
+    color: var(--color-muted);
+  }
+  .lab-meta {
+    font: 0.63rem/1.8 var(--font-mono);
+    margin: 1.3rem 0 0;
+  }
+  .lab-preview {
+    background: #e5eccf;
+    color: #24321b;
+    border-radius: 14px;
+    padding: 2rem;
+    text-decoration: none;
+    transform: none;
+    transition: transform 0.25s;
+    box-shadow: 0 20px 80px #0005;
+  }
+  .lab-preview:hover {
+    transform: rotate(0deg) translateY(-4px);
+    color: #24321b;
+  }
+  .preview-top,
+  .permission-row,
+  .preview-bottom {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: center;
+  }
+  .preview-top {
+    font: 0.65rem/1.6 var(--font-mono);
+    margin-bottom: 2rem;
+  }
+  .preview-status {
+    border: 1px solid #748766;
+    border-radius: 3px;
+    padding: 0.2rem 0.4rem;
+  }
+  .permission-row {
+    border-top: 1px solid #bdc9a9;
+    padding-block: 1rem;
+    font-size: 0.9rem;
+  }
+  .permission-row > span:last-child {
+    font: 0.64rem/1.5 var(--font-mono);
+    padding: 0.35rem 0.55rem;
+    border-radius: 3px;
+  }
+  .allow {
+    background: #c7dfb1;
+  }
+  .pending {
+    background: #f5e2a1;
+  }
+  .deny {
+    background: #e8c9c0;
+  }
+  .preview-bottom {
+    border-top: 1px solid #bdc9a9;
+    padding-top: 1.5rem;
+    line-height: 1.5;
+    font-size: 1.1rem;
+  }
+  .play-icon {
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #283b21;
+    color: #eef6dd;
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    font-size: 1.4rem;
+  }
+  .contact {
+    border-top: 1px solid var(--color-border);
+  }
+  .contact h2 {
+    font-size: clamp(2.5rem, 7.5vw, 6.5rem);
+    letter-spacing: -0.065em;
+    margin-block: 1.7rem 2.5rem;
+  }
+  .contact h2 span {
+    color: var(--color-lime);
+  }
+  .contact-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1.5rem;
+    align-items: center;
+  }
+  .contact-email {
+    font-size: clamp(1rem, 2vw, 1.55rem);
+    overflow-wrap: anywhere;
+  }
+  .socials {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-top: 2rem;
+    font: 0.75rem/1.6 var(--font-mono);
+  }
+  @media (max-width: 1050px) {
+    .hero {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+    h1 {
+      font-size: clamp(2.25rem, 6.5vw, 4rem);
+    }
+    .hero-copy {
+      max-width: 760px;
+    }
+    .focus-card {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+      gap: 0.5rem 2rem;
+    }
+    .focus-card > .eyebrow,
+    .focus-card > .text-link {
+      grid-column: 1 / -1;
+    }
+    .focus-card h2 {
+      margin-bottom: 0;
+    }
+  }
+  @media (max-width: 800px) {
+    .about-copy {
+      padding-top: 0;
+    }
+    .about,
+    .lab {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    .lab-preview {
+      width: 100%;
+      margin-top: 1.5rem;
+    }
+  }
+  @media (max-width: 600px) {
+    .strip-inner {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.6rem;
+      font-size: 0.65rem;
+      padding-block: 1.25rem;
+    }
+    .strip-inner span:nth-child(even) {
+      display: none;
+    }
+    .hero {
+      padding-block: 2.5rem;
+      gap: 2rem;
+    }
+    h1 {
+      font-size: clamp(2rem, 7.8vw, 2.8rem);
+      margin-top: 1.5rem;
+    }
+    .hero-actions {
+      gap: 0.75rem 1.25rem;
+    }
+    .hero-actions .button {
+      width: 100%;
+    }
+    .focus-card {
+      display: block;
+      padding: 1.5rem;
+    }
+    .focus-card h2 {
+      margin-bottom: 1rem;
+    }
+    .hero-location {
+      margin-top: 1.75rem;
+      margin-bottom: 0;
+    }
+    .lab-preview {
+      padding: 1.4rem;
+      transform: none;
+    }
+    .permission-row {
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .contact-bottom {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+</style>

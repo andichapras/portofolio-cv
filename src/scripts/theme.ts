@@ -7,8 +7,6 @@ const themeColor = document.querySelector<HTMLMetaElement>('[data-theme-color]')
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 let transitionTimer: number | undefined;
 
-if (toggle) root.classList.add('theme-controls-ready');
-
 const readStoredTheme = (): Theme | null => {
   try {
     const value = localStorage.getItem(storageKey);
@@ -24,9 +22,12 @@ const syncToggle = (theme: Theme) => {
   if (!toggle) return;
   const targetTheme = theme === 'dark' ? 'light' : 'dark';
   toggle.dataset.currentTheme = theme;
-  toggle.setAttribute('aria-label', 'Dark mode');
+  const indonesian = root.lang === 'id';
+  toggle.setAttribute('aria-label', indonesian ? 'Mode gelap' : 'Dark mode');
   toggle.setAttribute('aria-pressed', String(theme === 'dark'));
-  toggle.title = `Switch to ${targetTheme} mode`;
+  toggle.title = indonesian
+    ? `Beralih ke mode ${targetTheme === 'dark' ? 'gelap' : 'terang'}`
+    : `Switch to ${targetTheme} mode`;
 };
 
 const applyTheme = (theme: Theme, animate = false) => {
@@ -64,3 +65,5 @@ window.addEventListener('storage', (event) => {
 });
 
 applyTheme(getCurrentTheme());
+// Keep appearance stable during loading, enabling interaction only once handlers exist.
+if (toggle) toggle.disabled = false;

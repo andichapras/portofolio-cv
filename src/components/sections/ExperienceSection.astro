@@ -1,23 +1,36 @@
 ---
 import { experience } from '@/data/experience';
+import { getLocale, translate } from '@/lib/i18n';
+const locale = getLocale(Astro.url.pathname);
+const t = translate(locale);
 ---
 
 <section id="experience" class="section experience" aria-labelledby="experience-heading">
   <div class="section-heading">
     <div>
-      <p class="eyebrow"><span class="index">03 /</span> The journey</p><h2 id="experience-heading">
-        Built on experience.
+      <p class="eyebrow">
+        <span class="index">03 /</span>
+        {t('The journey', 'Perjalanan karier')}
+      </p><h2 id="experience-heading">
+        {t('Built on experience.', 'Bertumbuh lewat pengalaman.')}
       </h2>
     </div>
-    <p class="muted">Working across teams, requirements, and the systems that connect them.</p>
+    <p class="muted">
+      {
+        t(
+          'Working across teams, requirements, and the systems that connect them.',
+          'Menghubungkan tim, kebutuhan, dan sistem melalui kolaborasi.',
+        )
+      }
+    </p>
   </div>
   {
     experience.map((job, index) => (
       <article class="role">
         <p class="period">
           <span class="role-dot" aria-hidden="true" />
-          {job.startYear} — {job.endYear ?? 'Present'}
-          {job.endYear === null && <span class="current">Current</span>}
+          {job.startYear} — {job.endYear ?? t('Present', 'Sekarang')}
+          {job.endYear === null && <span class="current">{t('Current', 'Saat ini')}</span>}
         </p>
         <div>
           <>
@@ -28,7 +41,7 @@ import { experience } from '@/data/experience';
           </>
         </div>
         <ul>
-          {job.highlights.map((highlight) => (
+          {job.highlights[locale].map((highlight) => (
             <li>{highlight}</li>
           ))}
         </ul>
@@ -42,8 +55,8 @@ import { experience } from '@/data/experience';
   }
   .role {
     display: grid;
-    grid-template-columns: 0.85fr 1.2fr 1.5fr;
-    gap: 2rem;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.2fr) minmax(0, 1.5fr);
+    gap: clamp(1rem, 3vw, 2rem);
     border-top: 1px solid var(--color-border);
     padding-block: 2.5rem;
   }
@@ -80,7 +93,20 @@ import { experience } from '@/data/experience';
   li + li {
     margin-top: 0.75rem;
   }
-  @media (max-width: 800px) {
+  @media (max-width: 1050px) {
+    .role {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+    }
+    .period {
+      grid-column: 1 / -1;
+      margin-bottom: 0;
+    }
+    .current {
+      display: inline-block;
+      margin: 0 0 0 1rem;
+    }
+  }
+  @media (max-width: 640px) {
     .role {
       grid-template-columns: 1fr;
       gap: 0.8rem;

@@ -1,9 +1,9 @@
 export const siteConfig = {
   name: 'Andicha Eka Prastya',
-  role: 'Software Engineer & System Analyst',
-  title: 'Andicha Eka Prastya | Software Engineer & System Analyst',
+  role: 'Software Engineer',
+  title: 'Andicha Eka Prastya | Software Engineer — System Analysis & Design',
   description:
-    'Portfolio of Andicha Eka Prastya, a Software Engineer and System Analyst based in Jakarta, Indonesia.',
+    'Portfolio of Andicha Eka Prastya, a Software Engineer focused on requirements analysis and system design, based in Jakarta, Indonesia.',
   language: 'en',
   locale: 'en_US',
   location: 'Jakarta, Indonesia',
