@@ -106,9 +106,7 @@ audits, or representations of confidential employer systems.
 
 - Astro and TypeScript for the site foundation.
 - React for stateful game interactions.
-- The previous Three.js scene is no longer loaded on the homepage; its source and dependencies
-  remain temporarily for a separate cleanup.
-- GSAP and ScrollTrigger for purposeful motion.
+- CSS and browser animation APIs for motion, without Three.js or GSAP.
 - Markdown and Astro Content Collections for bilingual project content.
 - Vitest for game rules, language helpers, and carousel navigation rules.
 - Custom CSS for the visual system, responsive layout, and themes.
@@ -205,6 +203,8 @@ reading section; the Playground keeps its page-level active state.
 
 Set `site` in `astro.config.mjs` to the confirmed public origin before relying on canonical and
 language-alternate metadata. These absolute URLs are deliberately omitted until then.
+Sitemap generation is not configured yet; add the sitemap integration when the public origin
+is confirmed. MDX is not installed because the project content currently uses plain Markdown.
 
 ## Contact
 

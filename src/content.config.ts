@@ -6,7 +6,7 @@ const localizedText = z.object({ en: z.string().min(1), id: z.string().min(1) })
 
 // Cards, listings, and detail pages share the same validated editorial source.
 const projects = defineCollection({
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/projects' }),
+  loader: glob({ pattern: '**/*.md', base: './src/content/projects' }),
   schema: z.object({
     title: z.string().min(1),
     summary: localizedText,
