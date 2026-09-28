@@ -8,6 +8,7 @@ export const siteConfig = {
   locale: 'en_US',
   location: 'Jakarta, Indonesia',
   email: 'andichapras@gmail.com',
+  whatsapp: 'https://wa.me/6282140477200',
   socials: {
     github: 'https://github.com/andichapras',
     linkedin: 'https://www.linkedin.com/in/andichapras',

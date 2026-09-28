@@ -144,16 +144,15 @@ The build script runs the Astro and TypeScript checks before creating the produc
 
 ## CV availability
 
-The website includes a dedicated CV download area. The approved PDF has not yet been copied into the
-public repository, so the download action remains disabled. Once ready, the stable public filename
-is:
+The public PDF is available through **View CV** and **Download CV** in **Start a conversation**.
+The view action opens the PDF in a new tab using the visitor's browser. The stable filename is:
 
 ```text
 public/cv/andicha-eka-prastya-cv.pdf
 ```
 
 Keeping this filename unchanged allows the PDF to be replaced later without changing the website
-code.
+code. Rebuild and redeploy after replacing it to update the published website.
 
 ## Current status
 

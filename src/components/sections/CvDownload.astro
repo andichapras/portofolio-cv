@@ -17,19 +17,30 @@ const available = existsSync(resolve('public', 'cv', filename));
 <div class="cv-download">
   {
     available ? (
-      <a class="button secondary" href={downloadUrl} download={filename}>
-        {t('Download CV', 'Unduh CV')} <span aria-hidden="true">↓</span>
-      </a>
+      <>
+        <a
+          class="button secondary"
+          href={downloadUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-describedby="cv-view-note"
+        >
+          {t('View CV', 'Lihat CV')} <span aria-hidden="true">↗</span>
+        </a>
+        <a class="button secondary" href={downloadUrl} download={filename}>
+          {t('Download CV', 'Unduh CV')} <span aria-hidden="true">↓</span>
+        </a>
+      </>
     ) : (
       <button class="button secondary" type="button" disabled>
         {t('Download CV', 'Unduh CV')} <span aria-hidden="true">↓</span>
       </button>
     )
   }
-  <p class="muted">
+  <p class="muted" id="cv-view-note">
     {
       available
-        ? t('PDF · A closer look at my experience.', 'PDF · Kenali pengalaman saya lebih jauh.')
+        ? t('PDF · View opens in a new tab.', 'PDF · Pratinjau dibuka di tab baru.')
         : t('PDF coming soon.', 'PDF belum tersedia.')
     }
   </p>

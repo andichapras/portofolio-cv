@@ -177,9 +177,21 @@ const game = localizedPath('/playground/access-control/', locale);
                 'Peluang kerja, kolaborasi, atau pertanyaan teknis.',
               )
             }<br />{t("I'd love to hear from you.", 'Saya senang mendengarnya.')}
-          </p><a class="contact-email" href={`mailto:${siteConfig.email}`}
-            >{siteConfig.email} <span aria-hidden="true">↗</span></a
-          >
+          </p>
+          <div class="contact-channels">
+            <a class="contact-link" href={`mailto:${siteConfig.email}`}>
+              <span>{siteConfig.email}</span><span aria-hidden="true">↗</span>
+            </a>
+            <a
+              class="contact-link"
+              href={siteConfig.whatsapp}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span>{t('Chat on WhatsApp', 'Hubungi via WhatsApp')}</span>
+              <span aria-hidden="true">↗</span>
+            </a>
+          </div>
         </div>
         <CvDownload />
         <div class="socials">
@@ -378,14 +390,59 @@ const game = localizedPath('/playground/access-control/', locale);
   }
   .contact-bottom {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 1.5rem;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.75rem;
   }
-  .contact-email {
+  .contact-bottom > p {
+    margin-bottom: 0;
+  }
+  .contact-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    max-width: 100%;
+    gap: 0.75rem;
     font-size: clamp(1rem, 2vw, 1.55rem);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.25em;
+  }
+  .contact-link > span:first-child {
+    min-width: 0;
     overflow-wrap: anywhere;
+  }
+  .contact-link > span[aria-hidden] {
+    flex-shrink: 0;
+  }
+  .contact-channels {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    min-width: 0;
+    max-width: 100%;
+  }
+  @media (min-width: 1025px) {
+    .contact-bottom {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: clamp(2rem, 5vw, 5rem);
+    }
+    .contact-bottom > p {
+      flex: 0 1 38ch;
+    }
+    .contact-channels {
+      margin-left: auto;
+      gap: 1.5rem;
+    }
+    .contact-link {
+      font-size: clamp(1.5rem, 1.5vw, 2rem);
+      font-weight: 550;
+      line-height: 1.35;
+      letter-spacing: -0.025em;
+      gap: 1rem;
+    }
   }
   .socials {
     display: flex;
@@ -475,10 +532,6 @@ const game = localizedPath('/playground/access-control/', locale);
     .permission-row {
       flex-wrap: wrap;
       gap: 0.5rem;
-    }
-    .contact-bottom {
-      align-items: flex-start;
-      flex-direction: column;
     }
   }
 </style>
