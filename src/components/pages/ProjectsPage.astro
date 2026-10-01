@@ -10,6 +10,11 @@ const projects = await getPublishedProjects();
 ---
 
 <BaseLayout
+  pageType="CollectionPage"
+  projects={projects.map((project) => ({
+    name: project.data.title,
+    path: localizedPath(`/projects/${project.id}/`, locale),
+  }))}
   title={t('Projects | Andicha Eka Prastya', 'Proyek | Andicha Eka Prastya')}
   description={t(
     'Explore six projects across Mandiri Utama Finance and Nusantara Duta Solusindo: system analysis, full-stack engineering, integration, and delivery.',

@@ -22,20 +22,20 @@ sections:
       en: Phase 2 — On-site technical coordination
       id: Fase 2 — Koordinasi teknis on-site
     text:
-      en: Working for NDS as the bank's IT consulting partner, served as an on-site technical point of contact during SIT and UAT. Explained issues to clients, investigated frontend, backend, and data-related causes against the FSD, and assessed fix complexity and possible workarounds. Helped distribute fixing work together with the Technical Lead, supporting the Project Manager.
-      id: Sebagai bagian dari NDS, mitra konsultan IT bank, menjadi kontak teknis on-site selama SIT dan UAT. Menjelaskan issue kepada klien, menganalisis penyebab pada frontend, backend, dan data berdasarkan FSD, serta menilai kompleksitas perbaikan dan kemungkinan solusi sementara. Membantu pembagian pekerjaan fixing bersama Technical Lead untuk mendukung Project Manager.
+      en: Worked directly with the bank's team on-site during Phase 2 SIT and UAT, as part of NDS's consulting team. Helped clients understand what was going wrong, checked whether issues came from the frontend, backend, or data, and used the Functional Specification Document (FSD) to clarify the expected behavior. Assessed fix complexity and possible workarounds, then helped coordinate fixes with the Technical Lead while supporting the Project Manager.
+      id: Bekerja langsung dengan tim bank secara on-site selama SIT dan UAT fase 2 sebagai bagian dari tim konsultan NDS. Membantu klien memahami kendala, menelusuri apakah penyebabnya ada pada frontend, backend, atau data, dan menggunakan Functional Specification Document (FSD) untuk menjelaskan perilaku sistem yang diharapkan. Menilai kompleksitas perbaikan dan kemungkinan solusi sementara, lalu membantu koordinasi fixing bersama Technical Lead untuk mendukung Project Manager.
   - heading:
       en: Keeping requirements and specifications aligned
       id: Menyelaraskan kebutuhan dan spesifikasi
     text:
-      en: Developed a deep understanding of the FSD to support issue analysis and client discussions. Analyzed revisions to the BRD and updated the existing FSD across multiple versions as requirements changed.
-      id: Mendalami FSD untuk mendukung analisis issue dan diskusi klien. Menganalisis revisi BRD dan memperbarui FSD mengikuti format yang ada dalam beberapa versi perubahan kebutuhan.
+      en: Developed a deep understanding of the FSD to support issue analysis and client discussions. Analyzed revisions to the Business Requirement Document (BRD) and updated the existing FSD across multiple versions as requirements changed.
+      id: Mendalami FSD untuk mendukung analisis issue dan diskusi klien. Menganalisis revisi Business Requirement Document (BRD) dan memperbarui FSD mengikuti format yang ada dalam beberapa versi perubahan kebutuhan.
   - heading:
       en: Performance investigation and Redis R&D
       id: Investigasi performa dan R&D Redis
     text:
-      en: Contributed to a performance investigation lasting approximately four months, learning and using JMeter for testing. Conducted R&D during NDS's first Redis adoption in AROA, exploring caching for frequently accessed parameter data previously retrieved through APIs directly from the database. The team ultimately released AROA to production within the planned timeline; no quantified performance improvement is claimed here.
-      id: Berkontribusi dalam investigasi performa selama sekitar empat bulan, mempelajari dan menggunakan JMeter untuk pengujian. Melakukan R&D pada penerapan pertama Redis oleh NDS di AROA, mengeksplorasi caching data parameter yang sering diakses melalui API dan sebelumnya diambil langsung dari database. Tim akhirnya merilis AROA ke production sesuai timeline; tidak ada klaim angka peningkatan performa di sini.
+      en: Contributed to a performance investigation lasting approximately four months, learning and using JMeter for testing. Conducted R&D during NDS's first Redis adoption in AROA, exploring caching for frequently accessed parameter data previously retrieved through APIs directly from the database. The team ultimately released AROA to production within the planned timeline.
+      id: Berkontribusi dalam investigasi performa selama sekitar empat bulan, mempelajari dan menggunakan JMeter untuk pengujian. Melakukan R&D pada penerapan pertama Redis oleh NDS di AROA, mengeksplorasi caching data parameter yang sering diakses melalui API dan sebelumnya diambil langsung dari database. Tim akhirnya merilis AROA ke production sesuai timeline.
   - heading:
       en: Validating security findings with the team
       id: Memvalidasi temuan keamanan bersama tim

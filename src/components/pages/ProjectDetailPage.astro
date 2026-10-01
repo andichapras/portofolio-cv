@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/layout/Breadcrumbs.astro';
 import { getLocale, localizedPath, translate } from '@/lib/i18n';
 
 interface Props {
@@ -10,13 +11,20 @@ const { project } = Astro.props;
 const { data } = project;
 const locale = getLocale(Astro.url.pathname);
 const t = translate(locale);
+const breadcrumbs = [
+  { name: t('Home', 'Beranda'), path: localizedPath('/', locale) },
+  { name: t('Projects', 'Proyek'), path: localizedPath('/projects/', locale) },
+  { name: data.title, path: localizedPath(`/projects/${project.id}/`, locale) },
+];
 ---
 
-<BaseLayout title={`${data.title} | Andicha Eka Prastya`} description={data.summary[locale]}>
+<BaseLayout
+  title={`${data.title} | Andicha Eka Prastya`}
+  description={data.summary[locale]}
+  breadcrumbs={breadcrumbs}
+>
   <main id="main-content" class="container section project-detail" tabindex="-1">
-    <a class="text-link" href={localizedPath('/projects/', locale)}
-      >← {t('All projects', 'Semua proyek')}</a
-    >
+    <Breadcrumbs items={breadcrumbs} label={t('Breadcrumb', 'Jejak navigasi')} />
     <article>
       <header class="project-intro">
         <p class="eyebrow">{data.organization} / {data.role}</p>

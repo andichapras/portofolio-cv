@@ -165,8 +165,8 @@ Reduced-motion preferences disable transitions; without JavaScript it remains a 
 The project index provides an alternative to sliding through cards. Runtime and visual review
 of the new carousel remains pending.
 
-Planned improvements include further case-study evidence, additional system-thinking games, confirmed
-deployment metadata, and final accessibility and performance reviews.
+Planned improvements include further case-study evidence, additional system-thinking games, and
+final accessibility and performance reviews.
 
 ## Languages
 
@@ -200,10 +200,26 @@ space beneath the footer. Blur is optional, with opaque backgrounds for unsuppor
 reduced-transparency or increased-contrast preferences. Homepage navigation highlights the current
 reading section; the Playground keeps its page-level active state.
 
-Set `site` in `astro.config.mjs` to the confirmed public origin before relying on canonical and
-language-alternate metadata. These absolute URLs are deliberately omitted until then.
-Sitemap generation is not configured yet; add the sitemap integration when the public origin
-is confirmed. MDX is not installed because the project content currently uses plain Markdown.
+## Search and discoverability
+
+The primary address is [www.andichapras.com](https://www.andichapras.com/). The root domain
+redirects to it. English and Indonesian pages have their own canonical URLs and reciprocal
+language links, so each version can be discovered independently.
+
+The site presents Andicha's experience in readable, static HTML, including the six professional
+projects and their responsibilities. Structured data connects the personal profile, professional
+social accounts, project listing, and project navigation. It does not add unverified achievements
+or present a career goal as a current job title.
+
+Each production build generates a sitemap, `robots.txt`, and a 1200 × 630 PNG sharing preview.
+The preview is generated from `src/assets/social-preview.svg`; image processing adds no browser
+JavaScript and does not require a deployed server. Sitemap and metadata URLs share Astro's `site`
+configuration. The 404 page is not indexable, and unpublished projects are excluded from public routes.
+
+These foundations help search engines understand the portfolio, but do not guarantee search
+rankings or AI citations. See [the SEO launch checklist](docs/seo-launch.md) for Search Console,
+deployment verification, and ongoing content improvements. MDX is not installed because the
+project content currently uses plain Markdown.
 
 ## Contact
 

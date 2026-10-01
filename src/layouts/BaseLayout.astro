@@ -6,13 +6,23 @@ import { siteConfig } from '@/config/site';
 import '@/styles/global.css';
 import '@/styles/navigation.css';
 import SiteHeader from '@/components/layout/SiteHeader.astro';
-import { getLocale, localizedPath, translate, type Locale } from '@/lib/i18n';
+import { getLocale, translate, type Locale } from '@/lib/i18n';
+import {
+  canonicalUrl,
+  createStructuredData,
+  languageAlternates,
+  serializeStructuredData,
+  type Breadcrumb,
+} from '@/lib/seo';
 
 interface Props {
   title?: string;
   description?: string;
   language?: Locale;
   noindex?: boolean;
+  pageType?: 'WebPage' | 'ProfilePage' | 'CollectionPage';
+  breadcrumbs?: Breadcrumb[];
+  projects?: Breadcrumb[];
 }
 
 // Pages can override metadata while keeping the shared site defaults.
@@ -25,9 +35,25 @@ const {
     'Portofolio Andicha Eka Prastya, Software Engineer dengan fokus analisis kebutuhan dan desain sistem di Jakarta, Indonesia.',
   ),
   noindex = false,
+  pageType = 'WebPage',
+  breadcrumbs = [],
+  projects = [],
 } = Astro.props;
-// Absolute SEO URLs require a confirmed deployment origin, never localhost.
-const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefined;
+if (!Astro.site) throw new Error('Configure Astro site before rendering portfolio metadata.');
+const canonical = canonicalUrl(Astro.url.pathname, Astro.site);
+const alternates = languageAlternates(Astro.url.pathname, Astro.site);
+const socialImage = new URL('/social-preview.png', Astro.site).href;
+const socialImageAlt = `${siteConfig.name} — Software Engineer. System analysis and full-stack development.`;
+const structuredData = createStructuredData({
+  site: Astro.site,
+  pathname: Astro.url.pathname,
+  language,
+  title,
+  description,
+  pageType,
+  breadcrumbs,
+  projects,
+});
 ---
 
 <!doctype html>
@@ -36,37 +62,42 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefin
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="description" content={description} />
-    {noindex && <meta name="robots" content="noindex" />}
-    {canonical && !noindex && <link rel="canonical" href={canonical} />}
+    <meta name="author" content={siteConfig.name} />
+    <meta name="robots" content={noindex ? 'noindex' : 'index, follow, max-image-preview:large'} />
+    {!noindex && <link rel="canonical" href={canonical} />}
     {
-      Astro.site && !noindex && (
-        <>
-          <link
-            rel="alternate"
-            hreflang="en"
-            href={new URL(localizedPath(Astro.url.pathname, 'en'), Astro.site)}
-          />
-          <link
-            rel="alternate"
-            hreflang="id"
-            href={new URL(localizedPath(Astro.url.pathname, 'id'), Astro.site)}
-          />
-          <link
-            rel="alternate"
-            hreflang="x-default"
-            href={new URL(localizedPath(Astro.url.pathname, 'en'), Astro.site)}
-          />
-        </>
-      )
+      !noindex &&
+        Object.entries(alternates).map(([hreflang, href]) => (
+          <link rel="alternate" hreflang={hreflang} href={href} />
+        ))
     }
+    <link rel="sitemap" href="/sitemap-index.xml" />
     <meta property="og:locale" content={language === 'id' ? 'id_ID' : 'en_US'} />
     <meta property="og:locale:alternate" content={language === 'id' ? 'en_US' : 'id_ID'} />
-    {canonical && !noindex && <meta property="og:url" content={canonical} />}
+    {!noindex && <meta property="og:url" content={canonical} />}
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={siteConfig.name} />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={socialImageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+    <meta name="twitter:image:alt" content={socialImageAlt} />
+    {
+      !noindex && (
+        <script
+          is:inline
+          type="application/ld+json"
+          set:html={serializeStructuredData(structuredData)}
+        />
+      )
+    }
     <meta name="theme-color" content="#0c0e12" data-theme-color />
     <script is:inline>
       (() => {
