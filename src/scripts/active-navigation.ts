@@ -1,13 +1,14 @@
 export {};
 
 const links = document.querySelectorAll<HTMLAnchorElement>('[data-nav-section]');
-const sections = ['work', 'about', 'contact']
+const sections = ['experience', 'work', 'about', 'contact', 'playground']
   .map((id) => document.getElementById(id))
   .filter((section): section is HTMLElement => section !== null);
 
-// Playground uses its server-rendered page state; the homepage follows the reading position.
+// Detail pages keep their server-rendered state; the homepage follows reading position.
 if (sections.length > 0) {
   let frame = 0;
+  let previous: string | null = null;
   const update = () => {
     frame = 0;
     let current = '';
@@ -15,6 +16,8 @@ if (sections.length > 0) {
     for (const section of sections) {
       if (section.getBoundingClientRect().top <= readingLine) current = section.id;
     }
+    if (current === previous) return;
+    previous = current;
     for (const link of links) {
       if (link.dataset.navSection === current) link.setAttribute('aria-current', 'location');
       else link.removeAttribute('aria-current');

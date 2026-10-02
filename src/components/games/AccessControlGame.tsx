@@ -121,7 +121,7 @@ export default function AccessControlGame({ locale = 'en' }: { locale?: Locale }
   const failures = report?.results.filter((result) => !result.passed) ?? [];
 
   return (
-    <div className="access-game">
+    <div className="access-game" data-game-ready={ready}>
       <div className="access-toolbar">
         <span>{t('POLICY EDITOR', 'EDITOR ATURAN')} / v1</span>
         <span>

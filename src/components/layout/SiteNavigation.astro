@@ -8,26 +8,25 @@ const { placement } = Astro.props;
 const locale = getLocale(Astro.url.pathname);
 const t = translate(locale);
 const home = localizedPath('/', locale);
-const onPlayground = localizedPath(Astro.url.pathname, 'en').startsWith('/playground');
 const onProjects = localizedPath(Astro.url.pathname, 'en').startsWith('/projects');
 const items = [
+  {
+    key: 'experience',
+    label: t('Experience', 'Pengalaman'),
+    href: `${home}#experience`,
+    icon: 'M4 7h16v13H4z M8 7V4h8v3 M4 12h16 M10 12v3h4v-3',
+  },
   {
     key: 'work',
     label: t('Work', 'Proyek'),
     href: onProjects ? localizedPath('/projects/', locale) : `${home}#work`,
-    icon: 'M4 7h16v13H4z M8 7V4h8v3 M4 12h16 M10 12v3h4v-3',
+    icon: 'M3 4h7v7H3z M14 4h7v7h-7z M3 15h7v6H3z M14 15h7v6h-7z',
   },
   {
     key: 'about',
     label: t('About', 'Tentang'),
     href: `${home}#about`,
     icon: 'M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0 M4 21v-2a8 8 0 0 1 16 0v2',
-  },
-  {
-    key: 'playground',
-    label: 'Playground',
-    href: localizedPath('/playground/', locale),
-    icon: 'M8 7h8a4 4 0 0 1 4 3l1 7a2 2 0 0 1-3 2l-3-3H9l-3 3a2 2 0 0 1-3-2l1-7a4 4 0 0 1 4-3 M7 10v4 M5 12h4 M16 11h.01 M18 14h.01',
   },
   {
     key: 'contact',
@@ -51,13 +50,7 @@ const items = [
       <a
         href={item.href}
         data-nav-section={item.key}
-        aria-current={
-          item.key === 'playground' && onPlayground
-            ? 'page'
-            : item.key === 'work' && onProjects
-              ? 'location'
-              : undefined
-        }
+        aria-current={item.key === 'work' && onProjects ? 'location' : undefined}
       >
         <svg
           viewBox="0 0 24 24"
@@ -126,6 +119,9 @@ const items = [
     .navigation-bottom {
       position: fixed;
       z-index: 40;
+      bottom: 0.75rem;
+      left: 0.75rem;
+      right: 0.75rem;
       bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
       left: max(0.75rem, env(safe-area-inset-left, 0px));
       right: max(0.75rem, env(safe-area-inset-right, 0px));
@@ -142,7 +138,7 @@ const items = [
       min-height: 56px;
       padding: 0.4rem 0.15rem;
       border-radius: 21px;
-      font-size: 0.65rem;
+      font-size: 0.75rem;
       font-weight: 550;
     }
     .navigation-bottom a:focus-visible {

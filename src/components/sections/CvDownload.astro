@@ -5,6 +5,10 @@ import { resolve } from 'node:path';
 import { getLocale, translate } from '@/lib/i18n';
 
 const t = translate(getLocale(Astro.url.pathname));
+interface Props {
+  noteId?: string;
+}
+const { noteId = 'cv-view-note' } = Astro.props;
 
 // Keep this filename stable so replacing the PDF does not require a code change.
 const filename = 'andicha-eka-prastya-cv.pdf';
@@ -23,7 +27,7 @@ const available = existsSync(resolve('public', 'cv', filename));
           href={downloadUrl}
           target="_blank"
           rel="noopener noreferrer"
-          aria-describedby="cv-view-note"
+          aria-describedby={noteId}
         >
           {t('View CV', 'Lihat CV')} <span aria-hidden="true">↗</span>
         </a>
@@ -37,7 +41,7 @@ const available = existsSync(resolve('public', 'cv', filename));
       </button>
     )
   }
-  <p class="muted" id="cv-view-note">
+  <p class="muted" id={noteId}>
     {
       available
         ? t('PDF · View opens in a new tab.', 'PDF · Pratinjau dibuka di tab baru.')

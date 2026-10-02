@@ -84,7 +84,60 @@ const t = translate(locale);
         }
       </p></noscript
     >
-    <AccessControlGame client:load locale={locale} />
+    <div id="access-game-host">
+      <div id="game-recovery" class="no-script" role="status" hidden>
+        <p>
+          {
+            t(
+              'The game is taking longer to load. You can reload the page or continue exploring my experience.',
+              'Game membutuhkan waktu lebih lama untuk dimuat. Kamu bisa memuat ulang halaman atau melanjutkan membaca pengalaman saya.',
+            )
+          }
+        </p>
+        <a class="text-link" href={Astro.url.pathname}>{t('Reload game', 'Muat ulang game')}</a>
+        <a class="text-link" href={`${localizedPath('/', locale)}#experience`}>
+          {t('Back to my experience', 'Kembali ke pengalaman saya')}
+        </a>
+      </div>
+      <AccessControlGame client:load locale={locale} />
+    </div>
+    <script is:inline>
+      // This fallback must work independently of the game's downloaded React bundle.
+      (function () {
+        var host = document.getElementById('access-game-host');
+        var recovery = document.getElementById('game-recovery');
+        if (!host || !recovery) return;
+        var timer;
+        var observer;
+        function isReady() {
+          return Boolean(host.querySelector('[data-game-ready="true"]'));
+        }
+        function stop() {
+          clearTimeout(timer);
+          if (observer) observer.disconnect();
+        }
+        function start() {
+          stop();
+          recovery.hidden = true;
+          if (isReady()) return;
+          if (window.MutationObserver) {
+            observer = new MutationObserver(function () {
+              if (isReady()) {
+                recovery.hidden = true;
+                stop();
+              }
+            });
+            observer.observe(host, { subtree: true, attributes: true, childList: true });
+          }
+          timer = setTimeout(function () {
+            recovery.hidden = isReady();
+          }, 15000);
+        }
+        window.addEventListener('pagehide', stop);
+        window.addEventListener('pageshow', start);
+        start();
+      })();
+    </script>
     <p class="disclaimer muted">
       {
         t(
@@ -135,5 +188,8 @@ const t = translate(locale);
   .no-script {
     border: 1px solid var(--color-lime);
     padding: 1rem;
+  }
+  #game-recovery .text-link {
+    margin-right: 1rem;
   }
 </style>

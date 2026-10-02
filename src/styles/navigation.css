@@ -1,3 +1,7 @@
+html[data-restoring-position] {
+  scroll-behavior: auto;
+}
+
 /* Native transitions keep the static routes and normal browser navigation intact. */
 @media (prefers-reduced-motion: no-preference) {
   @view-transition {

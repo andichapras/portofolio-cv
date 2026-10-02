@@ -91,12 +91,13 @@ application screenshots and unsupported performance metrics are not published.
 
 The website combines professional information with small interactive experiences:
 
-- A responsive homepage covering my work, background, experience, and contact details.
+- A recruiter-first homepage: introduction and CV, experience, projects, background, contact,
+  then the optional playground.
 - A professional introduction focused on requirements analysis, system design, and collaboration.
 - English and Indonesian pages with a language switcher that works without JavaScript.
 - Light and dark themes with a smooth transition and a saved visitor preference.
 - An Access Control Challenge that turns authorization rules into a playable engineering exercise.
-- A swipeable project carousel, a scannable project index, and bilingual project detail pages.
+- A swipeable project carousel with an optional list view, a project index, and bilingual detail pages.
 - Accessible navigation, reduced-motion support, mobile-friendly layouts, and static fallbacks.
 
 The playful elements are educational simulations. They are not production benchmarks, security
@@ -144,7 +145,8 @@ The build script runs the Astro and TypeScript checks before creating the produc
 
 ## CV availability
 
-The public PDF is available through **View CV** and **Download CV** in **Start a conversation**.
+The public PDF is available through **View CV** and **Download CV** in the introduction and
+**Start a conversation**.
 The view action opens the PDF in a new tab using the visitor's browser. The stable filename is:
 
 ```text
@@ -161,9 +163,9 @@ theme switcher, bilingual routes, and first playground challenge are implemented
 
 The carousel uses CSS perspective rather than WebGL, with previous/next buttons, direct project
 selection, keyboard controls, mouse drag, and touch swipes. It never advances automatically.
-Reduced-motion preferences disable transitions; without JavaScript it remains a linked grid.
-The project index provides an alternative to sliding through cards. Runtime and visual review
-of the new carousel remains pending.
+Reduced-motion preferences disable transitions. Without JavaScript or browser support for `inert`
+and CSS perspective, it remains a linked grid. A list-view toggle makes all six projects visible
+without leaving the homepage. Runtime and visual review of these changes remains pending.
 
 Planned improvements include further case-study evidence, additional system-thinking games, and
 final accessibility and performance reviews.
@@ -185,7 +187,8 @@ the same in both languages. API Performance Lab and System Builder remain planne
 
 Language changes use native cross-document transitions where supported, with a short JavaScript
 fade fallback. Reduced-motion preferences disable these animations. The switch preserves the
-current hash and attempts to restore scroll position using short-lived session storage; links
+current hash and attempts to restore the current reading section using short-lived session storage;
+pages without named sections fall back to their scroll position. Links
 remain usable if JavaScript or storage is unavailable. No client-side router is required.
 
 Responsive layouts adapt the header, typography, cards, and controls across desktop, tablet, and
@@ -196,9 +199,32 @@ is still required after layout changes.
 The glass-style header stays at the top while scrolling. At widths up to 1024 CSS pixels, it
 contains only the brand and equally sized language/theme controls; navigation moves to a floating
 bottom dock with icons and text labels. The dock respects device safe areas, and the page reserves
-space beneath the footer. Blur is optional, with opaque backgrounds for unsupported browsers and
-reduced-transparency or increased-contrast preferences. Homepage navigation highlights the current
-reading section; the Playground keeps its page-level active state.
+space beneath the footer. Navigation prioritizes Experience, Work, About, and Contact. The playground
+remains accessible after the contact section. Blur is disabled on mobile layouts and coarse-pointer
+devices; unsupported browsers and reduced-transparency or increased-contrast preferences also use
+opaque surfaces. Homepage navigation highlights the current reading section.
+
+## Compatibility and manual review
+
+Core CV content and project links are rendered as HTML, not dependent on React hydration. Games
+remain optional and load on their own page. If the Access Control game has not become interactive
+after 15 seconds, a recovery message offers reload and return-to-experience links.
+
+The target is current Chrome, Edge, Firefox, Safari, and modern mobile browsers. Older browsers
+receive simpler fallbacks where practical; this is not a guarantee of full Internet Explorer or
+every manufacturer browser support. No polyfill bundle or additional dependency was introduced.
+
+Before release, manually run the quality checks above and review:
+
+- English and Indonesian at 320, 360, 768, and 1440 CSS pixels, plus 200% zoom.
+- Both CV buttons, email/WhatsApp links, sticky header, and bottom navigation.
+- Carousel arrows, swipe, keyboard controls, and list view; all projects must remain reachable.
+- Language changes midway through a section, then browser back/forward navigation.
+- Reduced motion, JavaScript disabled, and storage blocked.
+- A throttled or blocked game bundle: recovery should appear without blocking the portfolio.
+- Real mobile scrolling and Lighthouse/PageSpeed results before comparing performance claims.
+
+Source changes reduce animation and blur work, but do not establish measured Core Web Vitals gains.
 
 ## Search and discoverability
 

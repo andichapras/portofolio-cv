@@ -184,6 +184,10 @@ li {
 }
 /* Shared layout primitives; component-specific styles stay beside their components. */
 .container {
+  width: 90%;
+  max-width: 1240px;
+  margin-left: auto;
+  margin-right: auto;
   width: min(1240px, calc(100% - clamp(2rem, 6vw, 6rem)));
   max-width: calc(
     100% - max(env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px)) -
@@ -202,14 +206,22 @@ li {
 @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .glass-surface {
     background: linear-gradient(135deg, var(--glass-highlight), transparent 55%), var(--glass-tint);
-    -webkit-backdrop-filter: blur(20px) saturate(145%);
-    backdrop-filter: blur(20px) saturate(145%);
+    -webkit-backdrop-filter: blur(12px) saturate(125%);
+    backdrop-filter: blur(12px) saturate(125%);
   }
 }
 @media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
   .glass-surface {
     background: var(--glass-background);
     border-color: var(--color-control-border);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+/* Fixed glass surfaces need not blur the page on every mobile scroll frame. */
+@media (max-width: 1024px), (pointer: coarse) {
+  .glass-surface {
+    background: var(--glass-background);
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
   }
@@ -300,7 +312,7 @@ li {
   padding: 0.35rem 0.7rem;
   border: 1px solid var(--color-border);
   border-radius: 99px;
-  font: 0.67rem/1.5 var(--font-mono);
+  font: 0.75rem/1.5 var(--font-mono);
   color: var(--color-muted);
 }
 .skip-link {
@@ -330,16 +342,14 @@ li {
 .site-footer p {
   margin: 0;
 }
-/* Animate only a deliberate theme change, never the initial page render. */
+/* Limit theme transitions to surfaces; preserve carousel and toggle motion. */
 html[data-theme-transition] body,
-html[data-theme-transition]
-  body
-  *:not(.theme-toggle-icon):not(.theme-toggle-track):not(.theme-toggle-thumb),
-html[data-theme-transition] body *::before,
-html[data-theme-transition] body *::after {
-  transition-property: color, background-color, border-color, box-shadow, fill, stroke !important;
-  transition-duration: 320ms !important;
-  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1) !important;
+html[data-theme-transition] .glass-surface,
+html[data-theme-transition] .focus-card {
+  transition:
+    color 320ms ease,
+    background-color 320ms ease,
+    border-color 320ms ease;
 }
 @media (max-width: 760px) {
   .section-heading {

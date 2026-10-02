@@ -6,8 +6,9 @@ Store the public PDF at:
 public/cv/andicha-eka-prastya-cv.pdf
 ```
 
-The homepage **View CV** and **Download CV** buttons appear in **Start a conversation**, below the email
-and above the social links. Astro serves this file at `/cv/andicha-eka-prastya-cv.pdf`.
+The homepage **View CV** and **Download CV** buttons appear in the introduction and in
+**Start a conversation**, below the contact links and above the social links.
+Astro serves this file at `/cv/andicha-eka-prastya-cv.pdf`.
 No React component or extra dependency is needed.
 
 ## First setup

@@ -7,11 +7,17 @@ function initializeCarousel(root: HTMLElement) {
   const status = root.querySelector<HTMLElement>('[data-carousel-status]');
   if (!stage || !status || slides.length < 2) return;
 
+  // Keep every project readable if the browser cannot safely hide inactive cards.
+  if (!('inert' in HTMLElement.prototype) || !window.CSS?.supports('perspective', '1400px')) return;
+
   let active = 0;
+  let listView = false;
+  const viewToggle = root.querySelector<HTMLButtonElement>('[data-project-view]');
   let gesture: { id: number; x: number; y: number } | null = null;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   function show(index: number) {
+    if (listView) return;
     active = wrapIndex(index, slides.length);
     // Move focus before making the outgoing card inert.
     if (slides.some((slide, i) => i !== active && slide.contains(document.activeElement))) {
@@ -48,6 +54,7 @@ function initializeCarousel(root: HTMLElement) {
     }),
   );
   stage.addEventListener('keydown', (event) => {
+    if (listView) return;
     if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
     const destinations: Record<string, number> = {
       ArrowLeft: active - 1,
@@ -70,6 +77,7 @@ function initializeCarousel(root: HTMLElement) {
 
   // Leave links, vertical scrolling, and pinch zoom to the browser.
   stage.addEventListener('pointerdown', (event) => {
+    if (listView || !stage.setPointerCapture) return;
     if (!event.isPrimary || event.button !== 0) {
       resetGesture();
       return;
@@ -100,18 +108,42 @@ function initializeCarousel(root: HTMLElement) {
   stage.addEventListener('pointercancel', resetGesture);
   stage.addEventListener('lostpointercapture', resetGesture);
 
+  const setView = (asList: boolean) => {
+    resetGesture();
+    listView = asList;
+    viewToggle?.setAttribute('aria-pressed', String(asList));
+    root.querySelectorAll<HTMLElement>('[data-carousel-controls]').forEach((control) => {
+      control.hidden = asList;
+    });
+    if (asList) {
+      root.removeAttribute('data-enhanced');
+      root.removeAttribute('aria-roledescription');
+      stage.removeAttribute('tabindex');
+      stage.removeAttribute('role');
+      stage.removeAttribute('aria-describedby');
+      slides.forEach((slide) => {
+        slide.inert = false;
+        slide.removeAttribute('aria-hidden');
+        slide.removeAttribute('role');
+        slide.removeAttribute('aria-roledescription');
+        slide.removeAttribute('aria-label');
+      });
+      return;
+    }
+    root.setAttribute('aria-roledescription', 'carousel');
+    stage.tabIndex = 0;
+    stage.setAttribute('role', 'group');
+    stage.setAttribute('aria-describedby', 'project-hint');
+    show(active);
+    root.dataset.enhanced = 'true';
+  };
+  viewToggle?.addEventListener('click', () => setView(!listView));
+  if (viewToggle) viewToggle.hidden = false;
+
   // Enable the layered layout only after the controls are ready.
   root.setAttribute('role', 'region');
-  root.setAttribute('aria-roledescription', 'carousel');
   root.setAttribute('aria-labelledby', 'work-title');
-  stage.tabIndex = 0;
-  stage.setAttribute('role', 'group');
-  stage.setAttribute('aria-describedby', 'project-hint');
-  root.querySelectorAll<HTMLElement>('[data-carousel-controls]').forEach((control) => {
-    control.hidden = false;
-  });
-  show(0);
-  root.dataset.enhanced = 'true';
+  setView(false);
 }
 
 // Full-document navigation owns this module's lifetime; there is no global timer or observer.

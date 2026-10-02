@@ -16,6 +16,10 @@
   margin: 0;
   font-size: 0.9rem;
 }
+.carousel-toolbar [aria-pressed='true'] {
+  border-color: var(--color-accent);
+  background: var(--color-surface);
+}
 .project-carousel [hidden] {
   display: none;
 }

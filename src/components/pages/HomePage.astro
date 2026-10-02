@@ -8,7 +8,6 @@ import { getLocale, localizedPath, translate } from '@/lib/i18n';
 
 const locale = getLocale(Astro.url.pathname);
 const t = translate(locale);
-const playground = localizedPath('/playground/', locale);
 const game = localizedPath('/playground/access-control/', locale);
 ---
 
@@ -35,10 +34,11 @@ const game = localizedPath('/playground/access-control/', locale);
         <div class="hero-actions">
           <a class="button" href="#work"
             >{t('Explore my work', 'Lihat proyek saya')} <span aria-hidden="true">↘</span></a
-          ><a class="text-link" href={playground}
-            >{t('Or, play a little', 'Atau, coba bermain')} <span aria-hidden="true">↗</span></a
+          ><a class="text-link" href="#contact"
+            >{t('Get in touch', 'Hubungi saya')} <span aria-hidden="true">↘</span></a
           >
         </div>
+        <CvDownload noteId="hero-cv-view-note" />
         <p class="hero-location">
           <span aria-hidden="true">◎</span>
           {t('Based in Jakarta, Indonesia', 'Berdomisili di Jakarta, Indonesia')}
@@ -69,11 +69,12 @@ const game = localizedPath('/playground/access-control/', locale);
       </div>
     </div>
     <div class="container">
+      <ExperienceSection />
       <SelectedWork />
       <section id="about" class="section about" aria-labelledby="about-heading">
         <div>
           <p class="eyebrow">
-            <span class="index">02 /</span>
+            <span class="index">03 /</span>
             {t('Behind the build', 'Di balik karya')}
           </p><h2 id="about-heading">
             {t('Curious about the why.', 'Memahami alasannya.')}<br /><span class="muted"
@@ -102,11 +103,49 @@ const game = localizedPath('/playground/access-control/', locale);
           >
         </div>
       </section>
-      <ExperienceSection />
-      <section class="lab section" aria-labelledby="lab-heading">
+      <section id="contact" class="section contact" aria-labelledby="contact-heading">
+        <p class="eyebrow">
+          <span class="index">04 /</span>
+          {t('Start a conversation', 'Mulai percakapan')}
+        </p>
+        <h2 id="contact-heading">
+          {t('Have something', 'Ada ide')}<br />{t('in mind', 'atau peluang')}<span>?</span>
+        </h2>
+        <div class="contact-bottom">
+          <p class="muted">
+            {
+              t(
+                'An opportunity, a collaboration, or a good technical question.',
+                'Peluang kerja, kolaborasi, atau pertanyaan teknis.',
+              )
+            }<br />{t("I'd love to hear from you.", 'Saya senang mendengarnya.')}
+          </p>
+          <div class="contact-channels">
+            <a class="contact-link" href={`mailto:${siteConfig.email}`}>
+              <span>{siteConfig.email}</span><span aria-hidden="true">↗</span>
+            </a>
+            <a
+              class="contact-link"
+              href={siteConfig.whatsapp}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span>{t('Chat on WhatsApp', 'Hubungi via WhatsApp')}</span>
+              <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </div>
+        <CvDownload />
+        <div class="socials">
+          <a href={siteConfig.socials.linkedin}>LinkedIn ↗</a><a href={siteConfig.socials.github}
+            >GitHub ↗</a
+          >
+        </div>
+      </section>
+      <section id="playground" class="lab section" aria-labelledby="lab-heading">
         <div class="lab-copy">
           <p class="eyebrow">
-            <span class="index">04 /</span>
+            <span class="index">05 /</span>
             {t('A little less serious. Still engineering.', 'Lebih santai. Tetap belajar sistem.')}
           </p><h2 id="lab-heading">
             {t('Good systems.', 'Sistem yang baik.')}<br />{
@@ -160,45 +199,6 @@ const game = localizedPath('/playground/access-control/', locale);
             ><span class="play-icon" aria-hidden="true">↗</span>
           </div>
         </a>
-      </section>
-      <section id="contact" class="section contact" aria-labelledby="contact-heading">
-        <p class="eyebrow">
-          <span class="index">05 /</span>
-          {t('Start a conversation', 'Mulai percakapan')}
-        </p>
-        <h2 id="contact-heading">
-          {t('Have something', 'Ada ide')}<br />{t('in mind', 'atau peluang')}<span>?</span>
-        </h2>
-        <div class="contact-bottom">
-          <p class="muted">
-            {
-              t(
-                'An opportunity, a collaboration, or a good technical question.',
-                'Peluang kerja, kolaborasi, atau pertanyaan teknis.',
-              )
-            }<br />{t("I'd love to hear from you.", 'Saya senang mendengarnya.')}
-          </p>
-          <div class="contact-channels">
-            <a class="contact-link" href={`mailto:${siteConfig.email}`}>
-              <span>{siteConfig.email}</span><span aria-hidden="true">↗</span>
-            </a>
-            <a
-              class="contact-link"
-              href={siteConfig.whatsapp}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <span>{t('Chat on WhatsApp', 'Hubungi via WhatsApp')}</span>
-              <span aria-hidden="true">↗</span>
-            </a>
-          </div>
-        </div>
-        <CvDownload />
-        <div class="socials">
-          <a href={siteConfig.socials.linkedin}>LinkedIn ↗</a><a href={siteConfig.socials.github}
-            >GitHub ↗</a
-          >
-        </div>
       </section>
     </div>
   </main>

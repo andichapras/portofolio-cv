@@ -12,7 +12,7 @@ const projects = await getPublishedProjects();
 <section id="work" class="section" aria-labelledby="work-title">
   <div class="section-heading">
     <div>
-      <p class="eyebrow"><span class="index">01 /</span>{t('Selected work', 'Proyek pilihan')}</p>
+      <p class="eyebrow"><span class="index">02 /</span>{t('Selected work', 'Proyek pilihan')}</p>
       <h2 id="work-title">
         {t('Real work.', 'Pengalaman nyata.')}<br />
         {t('Thoughtful solutions.', 'Solusi yang dipikirkan matang.')}
@@ -29,6 +29,16 @@ const projects = await getPublishedProjects();
   </div>
   <div class="project-carousel" data-project-carousel>
     <div class="carousel-toolbar">
+      <button
+        class="button secondary"
+        type="button"
+        data-project-view
+        aria-controls="project-stage"
+        aria-pressed="false"
+        hidden
+      >
+        {t('List view', 'Tampilan daftar')}
+      </button>
       <p class="muted">
         {t('Explore the work behind my experience.', 'Kenali proyek di balik pengalaman saya.')}
       </p>
