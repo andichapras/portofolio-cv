@@ -2,12 +2,8 @@ html[data-restoring-position] {
   scroll-behavior: auto;
 }
 
-/* Native transitions keep the static routes and normal browser navigation intact. */
+/* BaseLayout owns the inline opt-in; animation styles remain in this stylesheet. */
 @media (prefers-reduced-motion: no-preference) {
-  @view-transition {
-    navigation: auto;
-  }
-
   ::view-transition-old(root) {
     animation: page-leave 160ms ease-out both;
   }
@@ -78,11 +74,5 @@ html[data-restoring-position] {
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  @view-transition {
-    navigation: none;
   }
 }

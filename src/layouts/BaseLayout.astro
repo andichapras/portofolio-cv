@@ -60,6 +60,20 @@ const structuredData = createStructuredData({
 <html lang={language}>
   <head>
     <meta charset="utf-8" />
+    <!-- Keep navigation opt-in in the initial HTML, independent of stylesheet loading. -->
+    <style is:inline>
+      @media (prefers-reduced-motion: no-preference) {
+        @view-transition {
+          navigation: auto;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        @view-transition {
+          navigation: none;
+        }
+      }
+    </style>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="description" content={description} />
     <meta name="author" content={siteConfig.name} />
