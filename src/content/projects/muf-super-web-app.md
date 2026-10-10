@@ -8,8 +8,8 @@ focus:
   en: Analysis · Architecture · Integration
   id: Analisis · Arsitektur · Integrasi
 summary:
-  en: Analyzed, designed, and built the core Super Web App, coordinating integrations across teams and contributing to supporting SSO and IAM systems.
-  id: Menganalisis, merancang, dan membangun inti Super Web App, mengoordinasikan integrasi lintas tim, serta berkontribusi pada sistem pendukung SSO dan IAM.
+  en: Analyzed, designed, and built the core Super Web App, coordinated integrations across teams, and contributed to SSO and IAM development as a team member.
+  id: Menganalisis, merancang, dan membangun inti Super Web App, mengoordinasikan integrasi lintas tim, serta berkontribusi dalam pengembangan SSO dan IAM sebagai anggota tim.
 technologies: [Next.js 16, Express.js, Oracle DB, Redis]
 sections:
   - heading:
@@ -19,18 +19,18 @@ sections:
       en: Independently analyzed, designed, and built the core application, discussing requirements and integration needs with other teams. The frontend connects applications through iframe-based integration.
       id: Secara mandiri menganalisis, merancang, dan membangun aplikasi inti, serta mendiskusikan kebutuhan dan integrasi bersama tim lain. Frontend menghubungkan aplikasi melalui integrasi berbasis iframe.
   - heading:
-      en: Shared responsibility for identity and access
-      id: Kolaborasi dalam identitas dan akses
+      en: Contributing to SSO and IAM development
+      id: Berkontribusi dalam pengembangan SSO dan IAM
     text:
-      en: Contributed to supporting SSO and IAM projects alongside their respective accountable PICs. These contributions are distinct from ownership of the core Super Web App.
-      id: Berkontribusi pada proyek pendukung SSO dan IAM bersama PIC yang bertanggung jawab. Kontribusi ini dibedakan dari tanggung jawab atas inti Super Web App.
+      en: Worked on SSO and IAM as a member of the development team, collaborating with the PIC responsible for each project. The PIC roles were held by other team members. This involvement was separate from independently analyzing, designing, and building the core Super Web App.
+      id: Terlibat dalam pengembangan SSO dan IAM sebagai anggota tim, berkolaborasi dengan PIC masing-masing proyek. Peran PIC dipegang oleh rekan tim lain. Keterlibatan ini terpisah dari tanggung jawab menganalisis, merancang, dan membangun inti Super Web App secara mandiri.
 stack:
   - label: { en: Frontend, id: Frontend }
     tools: Next.js 16 · Tailwind CSS 3 · Node.js 22 · iframe integration
   - label: { en: Backend, id: Backend }
     tools: Express.js · Node.js 22 · Pino
-  - label: { en: SSO (shared contribution), id: SSO (kontribusi bersama) }
+  - label: { en: SSO (development team member), id: SSO (anggota tim pengembang) }
     tools: Express.js · Node.js 22 · Pino · Oracle DB · Redis · PostgreSQL
-  - label: { en: IAM (shared contribution), id: IAM (kontribusi bersama) }
+  - label: { en: IAM (development team member), id: IAM (anggota tim pengembang) }
     tools: Express.js · Node.js 22 · Oracle DB · Redis · PostgreSQL
 ---
