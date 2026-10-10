@@ -33,6 +33,7 @@ const { items, label } = Astro.props;
   ol {
     display: flex;
     flex-wrap: wrap;
+    align-items: baseline;
     gap: 0.5rem 0.75rem;
     list-style: none;
     margin: 0;
@@ -47,11 +48,17 @@ const { items, label } = Astro.props;
     min-width: 0;
     overflow-wrap: anywhere;
   }
-  a {
+  /* Match link spacing so the current page shares the same text baseline. */
+  a,
+  [aria-current='page'] {
+    min-width: 0;
     padding-block: 0.5rem;
+  }
+  a {
     text-underline-offset: 0.2em;
   }
   .separator {
+    flex-shrink: 0;
     opacity: 0.6;
   }
 </style>
