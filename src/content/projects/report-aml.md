@@ -10,7 +10,7 @@ focus:
 summary:
   en: Connected business requirements, data and API design, environment preparation, and development support for an AML reporting application.
   id: Menghubungkan kebutuhan bisnis, desain data dan API, persiapan environment, serta dukungan pengembangan aplikasi pelaporan AML.
-technologies: [Next.js 14, Java 17, Spring Boot, Oracle DB]
+technologies: [Next.js 14, Java 17, Spring Boot, Oracle DB, Kafka]
 sections:
   - heading:
       en: Translating requirements into implementation
@@ -18,9 +18,15 @@ sections:
     text:
       en: Translated business requirements into technical solutions and designed data structures and REST APIs. Prepared development and deployment environments, supported cross-team discussions, and mentored junior developers.
       id: Menerjemahkan kebutuhan bisnis menjadi solusi teknis serta merancang struktur data dan REST API. Menyiapkan environment pengembangan dan deployment, mendukung diskusi lintas tim, serta membimbing junior developer.
+  - heading:
+      en: Reporting data integration
+      id: Integrasi data pelaporan
+    text:
+      en: Kafka is used to retrieve one of the data inputs needed for reporting.
+      id: Kafka digunakan untuk mengambil salah satu data yang dibutuhkan untuk pelaporan.
 stack:
   - label: { en: Frontend, id: Frontend }
     tools: Next.js 14 · Node.js 20 · Tailwind CSS 3
   - label: { en: Backend, id: Backend }
-    tools: Java 17 · Spring Boot · Oracle DB
+    tools: Java 17 · Spring Boot · Oracle DB · Kafka
 ---
