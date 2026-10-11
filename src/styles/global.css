@@ -234,6 +234,27 @@ li {
     scroll-padding-bottom: calc(6.5rem + env(safe-area-inset-bottom, 0px));
   }
 }
+/* Match this short-landscape query in SiteHeader and SiteNavigation. */
+@media (orientation: landscape) and (pointer: coarse) and (min-width: 560px) and (max-width: 1024px) and (max-height: 500px) {
+  :root {
+    --landscape-dock-width: 6rem;
+    --landscape-dock-edge: max(0.5rem, env(safe-area-inset-left, 0px));
+  }
+  html {
+    scroll-padding-top: calc(5.5rem + env(safe-area-inset-top, 0px));
+    scroll-padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+  }
+  body {
+    padding-left: calc(var(--landscape-dock-edge) + var(--landscape-dock-width) + 0.5rem);
+    padding-right: env(safe-area-inset-right, 0px);
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+  }
+  .container {
+    /* The body now reserves the rail and safe areas for every page, including the footer. */
+    width: calc(100% - 1.5rem);
+    max-width: none;
+  }
+}
 .section {
   padding-block: clamp(3.5rem, 7vw, 6.5rem);
   scroll-margin-top: 1rem;

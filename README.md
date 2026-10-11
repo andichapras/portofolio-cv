@@ -70,8 +70,10 @@ cross-team discussions, implementation support, and junior developer mentoring.
 
 ### Frontend Engineering Standardization
 
-A Next.js application template and an internal React library at MUF. A dedicated logging backend
-is planned, not presented as completed work.
+A Next.js 16 application template with Tailwind CSS 4 is currently used at MUF. A separate internal
+library is still in R&D, using React 19 and Tailwind CSS 4, with Nx for monorepo management and
+tsdown as the bundler. UI-side logging captures API requests leading up to an error to help trace
+user activity, integrating with a Java 21 / Spring Boot service and Elasticsearch.
 
 ### MASS Web App
 
@@ -203,6 +205,16 @@ space beneath the footer. Navigation prioritizes Experience, Work, About, and Co
 remains accessible after the contact section. Blur is disabled on mobile layouts and coarse-pointer
 devices; unsupported browsers and reduced-transparency or increased-contrast preferences also use
 opaque surfaces. Homepage navigation highlights the current reading section.
+
+On short touch-screen landscape viewports (560–1024 CSS pixels wide and at most 500 pixels high),
+the dock becomes a vertical rail on the left and the sticky header fits its contents at the top-right.
+The page reserves space for the rail and device safe areas. The rail can scroll when vertical space
+is limited. Portrait layouts and taller inner foldable displays retain the existing layout; these
+conditions describe the viewport, not a guaranteed device classification.
+
+Review landscape with touch emulation at 568 × 320 and 844 × 390, then rotate back to portrait.
+Also check a taller foldable viewport such as 900 × 700. Verify both languages, themes, section
+links, and footer access. Resizing a desktop window alone may not activate the coarse-pointer query.
 
 ## Compatibility and manual review
 
